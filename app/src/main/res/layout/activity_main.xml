@@ -10,7 +10,8 @@
     <TextView
         android:id="@+id/pillHub"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:textSize="28sp"
         android:text="Pill HUB"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,9 +19,10 @@
 
     <EditText
         android:id="@+id/enterUsername"
-        android:layout_width="0dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:hint="Enter Username"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/pillHub"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +30,9 @@
 
     <EditText
         android:id="@+id/enterPassword"
-        android:layout_width="0dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:hint="Enter Password"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/enterUsername"
