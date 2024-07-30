@@ -1,10 +1,16 @@
 package com.example.project02.Database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity
 public class Patient {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+
     private String ssn;
     private String lastName;
     private String firstName;
