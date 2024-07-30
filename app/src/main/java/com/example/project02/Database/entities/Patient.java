@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.project02.Database.AppDatabase;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = AppDatabase.patientTable)
 public class Patient {
 
     @PrimaryKey(autoGenerate = true)
@@ -27,6 +30,7 @@ public class Patient {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ssn = ssn;
+
     }
 
     @Override
