@@ -17,14 +17,14 @@ import com.example.project02.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.project02.MAIN_ACTIVITY_USER_ID";
-
+    private static final int LOGGED_OUT = -1;
     private ActivityMainBinding binding;
 
     private AppRepository repository;
 
     public static final String TAG = "GRP7_Pill_Hub";
 
-    int loggedInPatientID = -1;
+    int loggedInPatientID = LOGGED_OUT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         loginUser();
 
-        if(loggedInPatientID == -1){
+        if(loggedInPatientID == LOGGED_OUT){
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }

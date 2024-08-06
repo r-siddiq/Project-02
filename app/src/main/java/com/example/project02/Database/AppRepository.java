@@ -3,6 +3,9 @@ package com.example.project02.Database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
+import com.example.project02.Database.entities.Patient;
 import com.example.project02.MainActivity;
 
 import java.util.concurrent.Callable;
@@ -36,8 +39,22 @@ public class AppRepository {
         try{
             return future.get();
         }catch (InterruptedException | ExecutionException e){
-            Log.d(MainActivity.TAG, "Problem getting GymLogRepository, thread error.");
+            Log.d(MainActivity.TAG, "Problem getting AppRepository, thread error.");
         }
         return null;
+    }
+
+    public void insertuser(Patient...patient){
+        AppDatabase.databaseWriteExecutor.execute(()-> {
+            patientDAO.insert(patient);
+        });
+    }
+
+    public LiveData<Patient> getPatientByUsername(String username) {
+        return patientDAO.getUserByUsername(username);
+    }
+
+    public LiveData<Patient> getPatientByUserId(int userId) {
+        return patientDAO.getUserByUserId(userId);
     }
 }

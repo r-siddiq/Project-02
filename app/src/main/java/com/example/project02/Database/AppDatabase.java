@@ -1,6 +1,7 @@
 package com.example.project02.Database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -10,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.entities.Patient;
 import com.example.project02.Database.entities.Prescription;
+import com.example.project02.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,9 +44,7 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
             super.onCreate(db);
-            //Log.i(MainActivity.TAG, "DATABASE CREATED!")
-            //TODO:Add TAG to MainActivity
-            //TODO: add databaseWriteExecutor.execute(() ->{...}
+            Log.i(MainActivity.TAG, "DATABASE CREATED!");
             databaseWriteExecutor.execute(() -> {
                 PatientDAO dao = instance.patientDAO();
                 dao.deleteAll();
