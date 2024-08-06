@@ -8,54 +8,40 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/pillHub"
+        android:id="@+id/welcomeUser"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:textSize="28sp"
-        android:text="Pill HUB"
+        android:layout_height="wrap_content"
+        android:text="Welcome User!"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/enterUsername"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter Username"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/pillHub"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8" />
-
-    <EditText
-        android:id="@+id/enterPassword"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/enterUsername"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8" />
-
     <Button
-        android:id="@+id/login"
+        android:id="@+id/placeOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        app:layout_constraintTop_toBottomOf="@id/enterPassword"
+        android:text="Place Order"
+        app:layout_constraintTop_toBottomOf="@id/welcomeUser"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/signUp"
+        android:id="@+id/orderStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        app:layout_constraintTop_toBottomOf="@id/login"
+        android:text="Order Status"
+        app:layout_constraintTop_toBottomOf="@id/placeOrder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/previousOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous Orders"
+        app:layout_constraintTop_toBottomOf="@id/orderStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

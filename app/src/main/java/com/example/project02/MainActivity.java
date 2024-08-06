@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        repository = AppRepository.getRepository(getApplication());
+
+
+
 /*        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
