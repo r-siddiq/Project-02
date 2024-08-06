@@ -7,4 +7,7 @@
     <string name="next">Next</string>
     <string name="preference_file_key">PillHUBPreferenceFileKey</string>
     <string name="preference_userId_key">PillHUBPreferenceUserIdKey</string>
+    <string name="patients">Patients</string>
+    <string name="delete_user">Delete Patient</string>
+    <string name="back">Back</string>
 </resources>

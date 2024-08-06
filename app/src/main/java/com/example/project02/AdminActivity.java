@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,15 @@ public class AdminActivity extends AppCompatActivity {
         invalidateOptionsMenu();
 
         updateDisplay();
+
+        //Go to list of Users
+        binding.customerInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = UserMgmt.userMgmtIntentFactory(getApplicationContext(),loggedInPatientID);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -132,35 +142,3 @@ public class AdminActivity extends AppCompatActivity {
         });
     }
 }
- /*   @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityAdminBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        repository = AppRepository.getRepository(getApplication());
-
-*//*        Button orderRequests = findViewById(R.id.orderRequests);
-        orderRequests.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, OrderRequestsActivity.class);
-            startActivity(intent);
-        });
-
-        Button inventory = findViewById(R.id.inventory);
-        inventory.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, InventoryActivity.class);
-            startActivity(intent);
-        });
-
-        Button previousOrdersAdmin = findViewById(R.id.previousOrdersAdmin);
-        previousOrdersAdmin.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, PreviousOrdersActivity.class);
-            startActivity(intent);
-        });
-
-        Button customerInfo = findViewById(R.id.customerInfo);
-        customerInfo.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, CustomerInfoActivity.class);
-            startActivity(intent);
-        });*//*
-    }*/
-

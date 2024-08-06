@@ -9,85 +9,52 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
-
 import com.example.project02.Database.AppRepository;
 import com.example.project02.Database.entities.Patient;
 import com.example.project02.Database.entities.Prescription;
-import com.example.project02.databinding.ActivityMainBinding;
+import com.example.project02.databinding.ActivityUserMgmtBinding;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class UserMgmt extends AppCompatActivity {
 
-    private static final String MAIN_ACTIVITY_USER_ID = "com.example.project02.MAIN_ACTIVITY_USER_ID";
-    private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";
     private static final int LOGGED_OUT = -1;
-    private ActivityMainBinding binding;
-
-    private AppRepository repository;
-
-    public static final String TAG = "GRP7_Pill_Hub";
-
     int loggedInPatientID = LOGGED_OUT;
     private Patient patient;
+
+    private static final String ADMIN_ACTIVITY_USER_ID = "com.example.project02.ADMIN_ACTIVITY_USER_ID";
+    private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";
+    private AppRepository repository;
+    private ActivityUserMgmtBinding binding;
+
+    public static Intent userMgmtIntentFactory(Context applicationContext, int patientId) {
+        Intent intent = new Intent(applicationContext, UserMgmt.class);
+        intent.putExtra(ADMIN_ACTIVITY_USER_ID, patientId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityUserMgmtBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = AppRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
-
-        if(loggedInPatientID == LOGGED_OUT){
-            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-            startActivity(intent);
-        }
-
-
         updateDisplay();
-    }
-
-    static Intent mainActivityIntentFactory(Context context, int PatientID){
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MAIN_ACTIVITY_USER_ID, PatientID);
-        return intent;
-    }
-
-    private void loginUser(Bundle savedInstanceState) {
-        //Check shared preference for logged in user
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        loggedInPatientID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
-
-        if(loggedInPatientID == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)){
-            loggedInPatientID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY,LOGGED_OUT);
-        }
-        if(loggedInPatientID == LOGGED_OUT){
-            loggedInPatientID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
-        }
-        if(loggedInPatientID == LOGGED_OUT){
-            return;
-        }
-        LiveData<Patient> userObserver = repository.getPatientByUserId(loggedInPatientID);
-        userObserver.observe(this, user -> {
-            this.patient = user;
-            if(this.patient != null){
-                invalidateOptionsMenu();
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(AdminActivity.adminActivityIntentFactory(getApplicationContext(), loggedInPatientID));
             }
         });
-    }
 
-     private void logout() {
-        loggedInPatientID = LOGGED_OUT;
-        getIntent().putExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
-        startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
     }
 
     @Override
@@ -108,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
-
                 showLogoutDialog();
                 return false;
             }
@@ -117,14 +83,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showLogoutDialog(){
-        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(UserMgmt.this);
         final AlertDialog alertDialog = alerBuilder.create();
         alerBuilder.setMessage("Logout?");
         alerBuilder.setPositiveButton("Logout?", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                logout();
-            }
+            public void onClick(DialogInterface dialogInterface, int i) {logout();}
         });
 
         alerBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -146,4 +110,34 @@ public class MainActivity extends AppCompatActivity {
             sb.append(log);
         }
     }
+
+    private void logout() {
+        loggedInPatientID = LOGGED_OUT;
+        getIntent().putExtra(ADMIN_ACTIVITY_USER_ID, LOGGED_OUT);
+        startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
+    private void loginUser(Bundle savedInstanceState) {
+        //Check shared preference for logged in user
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        loggedInPatientID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
+
+        if(loggedInPatientID == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)){
+            loggedInPatientID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY,LOGGED_OUT);
+        }
+        if(loggedInPatientID == LOGGED_OUT){
+            loggedInPatientID = getIntent().getIntExtra(ADMIN_ACTIVITY_USER_ID, LOGGED_OUT);
+        }
+        if(loggedInPatientID == LOGGED_OUT){
+            return;
+        }
+        LiveData<Patient> userObserver = repository.getPatientByUserId(loggedInPatientID);
+        userObserver.observe(this, user -> {
+            this.patient = user;
+            if(this.patient != null){
+                invalidateOptionsMenu();
+            }
+        });
+    }
+
 }
