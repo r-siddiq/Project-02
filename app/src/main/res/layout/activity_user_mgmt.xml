@@ -19,26 +19,38 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/pillhub_recycler_item" />
 
-    <Button
-        android:id="@+id/deleteUser"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/enterPatient"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:gravity="center"
-        android:text="@string/delete_user"
+        android:hint="@string/enter_patient_to_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logDisplayRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/logDisplayRecyclerView"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <Button
+        android:id="@+id/deleteUserButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/delete_user"
+        android:layout_margin="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterPatient" />
 
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
+        android:layout_margin="4dp"
         android:text="@string/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/deleteUser" />
+        app:layout_constraintTop_toBottomOf="@+id/deleteUserButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

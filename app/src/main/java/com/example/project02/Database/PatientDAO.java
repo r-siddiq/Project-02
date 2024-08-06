@@ -34,4 +34,7 @@ public interface PatientDAO {
 
     @Query("SELECT COUNT(*) FROM " + AppDatabase.PATIENT_TABLE + " WHERE username = :username")
     LiveData<Integer> countUsersByUsername(String username);
+
+    @Query("SELECT * from " + AppDatabase.PATIENT_TABLE + " WHERE id == :userId" )
+    LiveData<List<Patient>> getAllPatientsByPatientIdLiveData(int userId);
 }

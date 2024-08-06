@@ -21,6 +21,7 @@ import com.example.project02.Database.entities.Prescription;
 import com.example.project02.databinding.ActivityAdminBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
     private static final String ADMIN_ACTIVITY_USER_ID = "com.example.project02.ADMIN_ACTIVITY_USER_ID";

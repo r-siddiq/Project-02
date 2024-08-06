@@ -10,4 +10,5 @@
     <string name="patients">Patients</string>
     <string name="delete_user">Delete Patient</string>
     <string name="back">Back</string>
+    <string name="enter_patient_to_delete">Enter patient to delete</string>
 </resources>

@@ -22,6 +22,7 @@ import com.example.project02.Database.entities.Prescription;
 import com.example.project02.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

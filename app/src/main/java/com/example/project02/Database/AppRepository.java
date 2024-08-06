@@ -10,6 +10,7 @@ import com.example.project02.Database.entities.Prescription;
 import com.example.project02.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -80,5 +81,9 @@ public class AppRepository {
 
     public LiveData<Integer> getUserCountByUsername(String username){
         return patientDAO.countUsersByUsername(username);
+    }
+
+    public LiveData<List<Patient>> getAllPatientsByUserId(int patientId) {
+        return patientDAO.getAllPatientsByPatientIdLiveData(patientId);
     }
 }
