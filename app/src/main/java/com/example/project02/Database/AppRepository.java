@@ -6,8 +6,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.project02.Database.entities.Patient;
+import com.example.project02.Database.entities.Prescription;
 import com.example.project02.MainActivity;
 
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -15,6 +17,7 @@ import java.util.concurrent.Future;
 public class AppRepository {
 
     private final PatientDAO patientDAO;
+    private final PrescriptionDAO prescriptionDAO;
 
     private static AppRepository repository;
 
@@ -22,6 +25,7 @@ public class AppRepository {
     public AppRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         this.patientDAO = db.patientDAO();
+        this.prescriptionDAO = db.prescriptionDAO();
     }
 
     public static AppRepository getRepository(Application application){
@@ -44,6 +48,22 @@ public class AppRepository {
         return null;
     }
 
+    public ArrayList<Prescription> getAllLogs() {
+        Future<ArrayList<Prescription>> future = AppDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Prescription>>() {
+                    @Override
+                    public ArrayList<Prescription> call() throws Exception {
+                        return (ArrayList<Prescription>) prescriptionDAO.getAllRecords();
+                    }
+                });
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.i(MainActivity.TAG, "Problem when getting all GymLogs in the repository.");
+        }
+        return null;
+    }
+
     public void insertuser(Patient...patient){
         AppDatabase.databaseWriteExecutor.execute(()-> {
             patientDAO.insert(patient);
@@ -51,10 +71,10 @@ public class AppRepository {
     }
 
     public LiveData<Patient> getPatientByUsername(String username) {
-        return patientDAO.getUserByUsername(username);
+        return patientDAO.getPatientByUsername(username);
     }
 
     public LiveData<Patient> getPatientByUserId(int userId) {
-        return patientDAO.getUserByUserId(userId);
+        return patientDAO.getPatientByUserId(userId);
     }
 }

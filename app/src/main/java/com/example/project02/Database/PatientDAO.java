@@ -27,8 +27,8 @@ public interface PatientDAO {
     void deleteAll();
 
     @Query("SELECT * from " + AppDatabase.PATIENT_TABLE + " WHERE username == :username" )
-    LiveData<Patient> getUserByUsername(String username);
+    LiveData<Patient> getPatientByUsername(String username);
 
     @Query("SELECT * from " + AppDatabase.PATIENT_TABLE + " WHERE id == :userId" )
-    LiveData<Patient> getUserByUserId(int userId);
+    LiveData<Patient> getPatientByUserId(int userId);
 }

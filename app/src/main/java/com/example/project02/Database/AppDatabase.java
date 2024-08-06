@@ -10,14 +10,16 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.entities.Patient;
+import com.example.project02.Database.entities.Prescription;
 import com.example.project02.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Patient.class}, version = 1, exportSchema = false)
+@Database(entities = {Patient.class, Prescription.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String PATIENT_TABLE = "patientTable";
+    public static final String PRESCRIPTION_TABLE = "prescriptionTable";
     private static final String DATABASE_NAME = "pillHub_database";
 
     // Singleton method
@@ -58,4 +60,6 @@ public abstract class AppDatabase extends RoomDatabase {
     };
 
     public abstract PatientDAO patientDAO();
+
+    public abstract PrescriptionDAO prescriptionDAO();
 }

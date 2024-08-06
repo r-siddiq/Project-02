@@ -5,4 +5,6 @@
     <string name="password_hint">Enter Password</string>
     <string name="re_enter_password_hint">Re-Enter Password</string>
     <string name="next">Next</string>
+    <string name="preference_file_key">PillHUBPreferenceFileKey</string>
+    <string name="preference_userId_key">PillHUBPreferenceUserIdKey</string>
 </resources>

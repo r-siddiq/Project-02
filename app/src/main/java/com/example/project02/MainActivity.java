@@ -9,23 +9,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
+
 
 import com.example.project02.Database.AppRepository;
 import com.example.project02.Database.entities.Patient;
+import com.example.project02.Database.entities.Prescription;
 import com.example.project02.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.project02.MAIN_ACTIVITY_USER_ID";
+    private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";;
     private static final int LOGGED_OUT = -1;
     private ActivityMainBinding binding;
 
@@ -41,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        loginUser();
+        repository = AppRepository.getRepository(getApplication());
+        loginUser(savedInstanceState);
         invalidateOptionsMenu();
 
         if(loggedInPatientID == LOGGED_OUT){
@@ -50,29 +51,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        repository = AppRepository.getRepository(getApplication());
 
-
-
-/*        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        Button signUpButton = findViewById(R.id.signUp);
-        signUpButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-            startActivity(intent);
-        });
-
-        Button loginButton = findViewById(R.id.login);
-        loginButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
-            startActivity(intent);
-        });*/
+        updateDisplay();
     }
 
     static Intent mainActivityIntentFactory(Context context, int PatientID){
@@ -81,14 +61,32 @@ public class MainActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void loginUser() {
-        //TODO: make login method functional
-        patient = new Patient("FakeUser", "password");
-        loggedInPatientID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
+    private void loginUser(Bundle savedInstanceState) {
+        //Check shared preference for logged in user
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        loggedInPatientID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
+
+        if(loggedInPatientID == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)){
+            loggedInPatientID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY,LOGGED_OUT);
+        }
+        if(loggedInPatientID == LOGGED_OUT){
+            loggedInPatientID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
+        }
+        if(loggedInPatientID == LOGGED_OUT){
+            return;
+        }
+        LiveData<Patient> userObserver = repository.getPatientByUserId(loggedInPatientID);
+        userObserver.observe(this, user -> {
+            this.patient = user;
+            if(this.patient != null){
+                invalidateOptionsMenu();
+            }
+        });
     }
 
     private void logout() {
-        //TODO: finish logout method
+        loggedInPatientID = LOGGED_OUT;
+        getIntent().putExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
     }
 
@@ -103,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
+        if(patient == null){
+            return false;
+        }
         item.setTitle(patient.getUsername());
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -134,5 +135,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alerBuilder.create().show();
+    }
+
+    private void updateDisplay(){
+        ArrayList<Prescription> allLogs = repository.getAllLogs();
+        if(allLogs.isEmpty()){
+        }
+        StringBuilder sb = new StringBuilder();
+        for(Prescription log : allLogs){
+            sb.append(log);
+        }
     }
 }

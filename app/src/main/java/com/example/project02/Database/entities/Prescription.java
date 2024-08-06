@@ -1,99 +1,90 @@
 package com.example.project02.Database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
+import com.example.project02.Database.AppDatabase;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = AppDatabase.PRESCRIPTION_TABLE)
 public class Prescription {
-
     @PrimaryKey(autoGenerate = true)
 
-    private String medicationName;
-    private Integer medicationCount;
-    private Integer unitSize;
-    private String medicationStrength; //mg, g, etc.
-    private Integer medicationRefillTimes;
-    private LocalDate medicationRefillDate;
-    private String medicationInstructions;
+    private int id;
+    private String exercise;
+    private double weight;
+    private int reps;
+    private int userID;
 
-    public String getMedicationName() {
-        return medicationName;
+    public Prescription(String exercise, double weight, int reps, int userID) {
+        this.exercise = exercise;
+        this.weight = weight;
+        this.reps = reps;
+        this.userID = userID;
     }
 
-    public void setMedicationName(String medicationName) {
-        this.medicationName = medicationName;
+    @NonNull
+    @Override
+    public String toString() {
+        return  exercise + '\n' +
+                "Weight: " + weight + '\n' +
+                "Reps: " + reps + '\n' +
+                "---------------------\n";
     }
 
-    public Integer getMedicationCount() {
-        return medicationCount;
+    public int getId() {
+        return id;
     }
 
-    public void setMedicationCount(Integer medicationCount) {
-        this.medicationCount = medicationCount;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Integer getUnitSize() {
-        return unitSize;
+    public String getExercise() {
+        return exercise;
     }
 
-    public void setUnitSize(Integer unitSize) {
-        this.unitSize = unitSize;
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
     }
 
-    public String getMedicationStrength() {
-        return medicationStrength;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setMedicationStrength(String medicationStrength) {
-        this.medicationStrength = medicationStrength;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-    public Integer getMedicationRefillTimes() {
-        return medicationRefillTimes;
+    public int getReps() {
+        return reps;
     }
 
-    public void setMedicationRefillTimes(Integer medicationRefillTimes) {
-        this.medicationRefillTimes = medicationRefillTimes;
+    public void setReps(int reps) {
+        this.reps = reps;
     }
 
-    public LocalDate getMedicationRefillDate() {
-        return medicationRefillDate;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setMedicationRefillDate(LocalDate medicationRefillDate) {
-        this.medicationRefillDate = medicationRefillDate;
-    }
-
-    public String getMedicationInstructions() {
-        return medicationInstructions;
-    }
-
-    public void setMedicationInstructions(String medicationInstructions) {
-        this.medicationInstructions = medicationInstructions;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Prescription that = (Prescription) o;
-        return Objects.equals(medicationName, that.medicationName) && Objects.equals(medicationCount, that.medicationCount) && Objects.equals(unitSize, that.unitSize) && Objects.equals(medicationStrength, that.medicationStrength) && Objects.equals(medicationRefillTimes, that.medicationRefillTimes) && Objects.equals(medicationInstructions, that.medicationInstructions);
+        Prescription prescription = (Prescription) o;
+        return id == prescription.id && Double.compare(weight, prescription.weight) == 0 && reps == prescription.reps && userID == prescription.userID && Objects.equals(exercise, prescription.exercise);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(medicationName, medicationCount, unitSize, medicationStrength, medicationRefillTimes, medicationInstructions);
-    }
-
-    public Prescription(String medicationName, Integer medicationCount, Integer unitSize, String medicationStrength, Integer medicationRefillTimes, String medicationInstructions) {
-        this.medicationName = medicationName;
-        this.medicationCount = medicationCount;
-        this.unitSize = unitSize;
-        this.medicationStrength = medicationStrength;
-        this.medicationRefillTimes = medicationRefillTimes;
-        this.medicationInstructions = medicationInstructions;
+        return Objects.hash(id, exercise, weight, reps, userID);
     }
 }
