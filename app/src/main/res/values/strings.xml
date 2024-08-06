@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Project02</string>
+    <string name="sign_up_title">Please Sign Up</string>
+    <string name="username_hint">Enter Username</string>
+    <string name="password_hint">Enter Password</string>
+    <string name="re_enter_password_hint">Re-Enter Password</string>
+    <string name="next">Next</string>
 </resources>

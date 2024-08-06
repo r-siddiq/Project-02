@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project02.Database.AppRepository;
 import com.example.project02.databinding.ActivityLoginBinding;
@@ -28,10 +24,20 @@ public class LoginActivity extends AppCompatActivity {
 
         repository = AppRepository.getRepository(getApplication());
 
+        //Login button clicked
         binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), 0);
+                startActivity(intent);
+            }
+        });
+
+        //SignUp button clicked
+        binding.signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = SignUpActivity.signUpIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
