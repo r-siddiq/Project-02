@@ -6,9 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -79,13 +83,36 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginUser() {
         //TODO: make login method functional
-        patient = new Patient("Jess", "password");
+        patient = new Patient("FakeUser", "password");
         loggedInPatientID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
     }
 
     private void logout() {
         //TODO: finish logout method
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.logoutMenuItem);
+        item.setVisible(true);
+        item.setTitle(patient.getUsername());
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
+
+                showLogoutDialog();
+                return false;
+            }
+        });
+        return true;
     }
 
     private void showLogoutDialog(){
