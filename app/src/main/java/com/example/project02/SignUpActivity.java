@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,9 +38,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getInformationFromDisplay();
-                insertNewUser();
-                Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-                startActivity(intent);
             }
         });
     }
@@ -99,19 +95,31 @@ public class SignUpActivity extends AppCompatActivity {
         reenterPassword = binding.reEnterSignUpPassword.getText().toString();
         if(!newPassword.equals(reenterPassword)){
             toastMaker("Passwords do not match.");
+            return;
         }
+        insertNewUser();
     }
 
     private void insertNewUser(){
         if(newUsername.isEmpty()){
             return;
         }
+
         Patient patient = new Patient(newUsername, newPassword);
-        repository.insertuser(patient);
-        toastMaker("User added.");
+        repository.getUserCountByUsername(newUsername).observe(this, count -> {
+            if(count != null){
+                if(count == 0){
+                    repository.insertUser(patient);
+                    toastMaker("User added.");
+                    Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+                    startActivity(intent);
+                }else {
+                    toastMaker("User already exists.");
+                }
+            }
+        });
+
     }
-
-
 
     private void toastMaker(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

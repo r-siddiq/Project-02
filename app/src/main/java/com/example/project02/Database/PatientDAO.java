@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface PatientDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Patient... patients);
 
     @Delete
@@ -31,4 +31,7 @@ public interface PatientDAO {
 
     @Query("SELECT * from " + AppDatabase.PATIENT_TABLE + " WHERE id == :userId" )
     LiveData<Patient> getPatientByUserId(int userId);
+
+    @Query("SELECT COUNT(*) FROM " + AppDatabase.PATIENT_TABLE + " WHERE username = :username")
+    LiveData<Integer> countUsersByUsername(String username);
 }

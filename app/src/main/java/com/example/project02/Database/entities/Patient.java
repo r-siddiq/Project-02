@@ -1,6 +1,7 @@
 package com.example.project02.Database.entities;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
@@ -8,7 +9,7 @@ import com.example.project02.Database.AppDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = AppDatabase.PATIENT_TABLE)
+@Entity(tableName = AppDatabase.PATIENT_TABLE, indices = {@Index(value = {"username"}, unique = true)})
 public class Patient {
     @PrimaryKey(autoGenerate = true)
     private int id;

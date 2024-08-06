@@ -64,7 +64,7 @@ public class AppRepository {
         return null;
     }
 
-    public void insertuser(Patient...patient){
+    public void insertUser(Patient patient){
         AppDatabase.databaseWriteExecutor.execute(()-> {
             patientDAO.insert(patient);
         });
@@ -76,5 +76,9 @@ public class AppRepository {
 
     public LiveData<Patient> getPatientByUserId(int userId) {
         return patientDAO.getPatientByUserId(userId);
+    }
+
+    public LiveData<Integer> getUserCountByUsername(String username){
+        return patientDAO.countUsersByUsername(username);
     }
 }
