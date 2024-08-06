@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(password.equals(user.getPassword())){
                     startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
                 }else{
-                    toastMaker("Invalid password");
+                    toastMaker("Invalid username or password");
                     binding.enterPassword.setSelection(0);
                 }
             }else{
