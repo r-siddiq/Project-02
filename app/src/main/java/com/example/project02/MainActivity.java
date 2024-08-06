@@ -1,7 +1,10 @@
 package com.example.project02;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -10,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 
 import com.example.project02.Database.AppRepository;
+import com.example.project02.Database.entities.Patient;
 import com.example.project02.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "GRP7_Pill_Hub";
 
     int loggedInPatientID = LOGGED_OUT;
+    private Patient patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         loginUser();
+        invalidateOptionsMenu();
 
         if(loggedInPatientID == LOGGED_OUT){
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
@@ -71,7 +78,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        //TODO: create login method.
+        //TODO: make login method functional
+        patient = new Patient("Jess", "password");
         loggedInPatientID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
+    }
+
+    private void logout() {
+        //TODO: finish logout method
+        startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
+    private void showLogoutDialog(){
+        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog alertDialog = alerBuilder.create();
+        alerBuilder.setMessage("Logout?");
+        alerBuilder.setPositiveButton("Logout?", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                logout();
+            }
+        });
+
+        alerBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alerBuilder.create().show();
     }
 }

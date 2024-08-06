@@ -10,7 +10,6 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.entities.Patient;
-import com.example.project02.Database.entities.Prescription;
 import com.example.project02.MainActivity;
 
 import java.util.concurrent.ExecutorService;
@@ -26,21 +25,21 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4; //Maximum number of threads in database
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static AppDatabase getInstance(Context context) {
+    public static AppDatabase getInstance(final Context context) {
         if (instance == null) {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, DATABASE_NAME)
                             .fallbackToDestructiveMigration()
-                            .addCallback(addDeafultValues)
+                            .addCallback(addDefaultValues)
                             .build();
                 }
             }
         }
         return instance;
     }
-    private static final RoomDatabase.Callback addDeafultValues = new RoomDatabase.Callback(){
+    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
             super.onCreate(db);
