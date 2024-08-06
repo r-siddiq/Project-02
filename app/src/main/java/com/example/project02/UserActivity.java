@@ -24,20 +24,20 @@ public class UserActivity extends AppCompatActivity {
 
         Button placeOrderButton = findViewById(R.id.placeOrder);
         placeOrderButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserActivity.this, PlaceOrderActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(UserActivity.this, PlaceOrderActivity.class);
+//startActivity(intent);
         });
 
         Button orderStatusButton = findViewById(R.id.orderStatus);
         orderStatusButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserActivity.this, OrderStatusActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(UserActivity.this, OrderStatusActivity.class);
+//            startActivity(intent);
         });
 
         Button previousOrdersButton = findViewById(R.id.previousOrders);
         previousOrdersButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserActivity.this, PreviousOrdersActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(UserActivity.this, PreviousOrdersActivity.class);
+//            startActivity(intent);
         });
     }
 }

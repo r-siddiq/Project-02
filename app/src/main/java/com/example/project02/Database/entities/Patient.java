@@ -4,19 +4,66 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity
 public class Patient {
 
     @PrimaryKey(autoGenerate = true)
+
     private int id;
+    private String username;
+    private String password;
+    private boolean isAddmin;
 
+    public Patient(String username, String password) {
+        this.username = username;
+        this.password = password;
+        isAddmin = false;
+    }
 
-    private String ssn;
-    private String lastName;
-    private String firstName;
-    private String street;
-    private String city;
-    private String state;
-    private String zipCode;
-    private String birthDate;  // maybe use date object?
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAddmin() {
+        return isAddmin;
+    }
+
+    public void setAddmin(boolean addmin) {
+        isAddmin = addmin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return id == patient.id && isAddmin == patient.isAddmin && Objects.equals(username, patient.username) && Objects.equals(password, patient.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, isAddmin);
+    }
 }
