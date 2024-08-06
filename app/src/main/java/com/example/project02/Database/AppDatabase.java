@@ -10,12 +10,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.entities.Patient;
 import com.example.project02.Database.entities.Prescription;
-import com.example.project02.Database.entities.Pharmacy;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Patient.class, Pharmacy.class, Prescription.class}, version = 1, exportSchema = false)
+@Database(entities = {Patient.class, Prescription.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String PATIENT_TABLE = "patientTable";
     private static final String DATABASE_NAME = "pillHub_database";
