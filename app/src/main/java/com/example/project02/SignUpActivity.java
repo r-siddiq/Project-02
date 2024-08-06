@@ -13,15 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project02.Database.AppRepository;
+import com.example.project02.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private ActivitySignUpBinding binding;
     private AppRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         repository = AppRepository.getRepository(getApplication());
     }
 
