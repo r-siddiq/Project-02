@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.project02.Database.AppDatabase;
+
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = AppDatabase.PATIENT_TABLE)
 public class Patient {
 
     @PrimaryKey(autoGenerate = true)

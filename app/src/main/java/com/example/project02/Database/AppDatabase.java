@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {Patient.class, Pharmacy.class, Prescription.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
+    public static final String PATIENT_TABLE = "patientTable";
     private static final String DATABASE_NAME = "pillHub_database";
 
     // Singleton method
