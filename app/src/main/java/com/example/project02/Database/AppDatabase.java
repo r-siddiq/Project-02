@@ -14,7 +14,7 @@ import com.example.project02.Database.entities.Prescription;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Patient.class, Prescription.class}, version = 1, exportSchema = false)
+@Database(entities = {Patient.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String PATIENT_TABLE = "patientTable";
     private static final String DATABASE_NAME = "pillHub_database";
@@ -45,7 +45,18 @@ public abstract class AppDatabase extends RoomDatabase {
             //Log.i(MainActivity.TAG, "DATABASE CREATED!")
             //TODO:Add TAG to MainActivity
             //TODO: add databaseWriteExecutor.execute(() ->{...}
+            databaseWriteExecutor.execute(() -> {
+                PatientDAO dao = instance.patientDAO();
+                dao.deleteAll();
+                Patient admin = new Patient("admin1", "admin1");
+                admin.setAddmin(true);
+                dao.insert(admin);
+                Patient testUser1 = new Patient("testuser1", "testuser1");
+                dao.insert(testUser1);
+            });
         }
 
     };
+
+    public abstract PatientDAO patientDAO();
 }

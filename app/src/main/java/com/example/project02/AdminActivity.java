@@ -24,8 +24,8 @@ public class AdminActivity extends AppCompatActivity {
 
         Button orderRequests = findViewById(R.id.orderRequests);
         orderRequests.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, OrderRequestsActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(AdminActivity.this, OrderRequestsActivity.class);
+//            startActivity(intent);
         });
 
         Button inventory = findViewById(R.id.inventory);
@@ -36,14 +36,14 @@ public class AdminActivity extends AppCompatActivity {
 
         Button previousOrdersAdmin = findViewById(R.id.previousOrdersAdmin);
         previousOrdersAdmin.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, PreviousOrdersActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(AdminActivity.this, PreviousOrdersActivity.class);
+//            startActivity(intent);
         });
 
         Button customerInfo = findViewById(R.id.customerInfo);
         customerInfo.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, CustomerInfoActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(AdminActivity.this, CustomerInfoActivity.class);
+//            startActivity(intent);
         });
     }
 }
