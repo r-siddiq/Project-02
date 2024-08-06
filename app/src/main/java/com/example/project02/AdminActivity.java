@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.project02.Database.AppRepository;
 import com.example.project02.Database.entities.Patient;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 
 public class AdminActivity extends AppCompatActivity {
     private static final String ADMIN_ACTIVITY_USER_ID = "com.example.project02.ADMIN_ACTIVITY_USER_ID";
+    private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";
     private ActivityAdminBinding binding;
     private AppRepository repository;
     private static final int LOGGED_OUT = -1;
@@ -30,7 +33,9 @@ public class AdminActivity extends AppCompatActivity {
 
 
     public static Intent adminActivityIntentFactory(Context applicationContext, int patientId) {
-        return new Intent(applicationContext, AdminActivity.class);
+        Intent intent = new Intent(applicationContext, AdminActivity.class);
+        intent.putExtra(ADMIN_ACTIVITY_USER_ID, patientId);
+        return intent;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class AdminActivity extends AppCompatActivity {
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = AppRepository.getRepository(getApplication());
+        loginUser(savedInstanceState);
         invalidateOptionsMenu();
 
         updateDisplay();
@@ -61,7 +67,6 @@ public class AdminActivity extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
-
                 showLogoutDialog();
                 return false;
             }
@@ -102,6 +107,29 @@ public class AdminActivity extends AppCompatActivity {
         loggedInPatientID = LOGGED_OUT;
         getIntent().putExtra(ADMIN_ACTIVITY_USER_ID, LOGGED_OUT);
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
+    private void loginUser(Bundle savedInstanceState) {
+        //Check shared preference for logged in user
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        loggedInPatientID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
+
+        if(loggedInPatientID == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)){
+            loggedInPatientID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY,LOGGED_OUT);
+        }
+        if(loggedInPatientID == LOGGED_OUT){
+            loggedInPatientID = getIntent().getIntExtra(ADMIN_ACTIVITY_USER_ID, LOGGED_OUT);
+        }
+        if(loggedInPatientID == LOGGED_OUT){
+            return;
+        }
+        LiveData<Patient> userObserver = repository.getPatientByUserId(loggedInPatientID);
+        userObserver.observe(this, user -> {
+            this.patient = user;
+            if(this.patient != null){
+                invalidateOptionsMenu();
+            }
+        });
     }
 }
  /*   @Override
