@@ -1,36 +1,26 @@
 package com.example.project02.Database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
 
 import com.example.project02.Database.AppDatabase;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity(tableName = AppDatabase.patientTable)
+@Entity(tableName = AppDatabase.PATIENT_TABLE, indices = {@Index(value = {"username"}, unique = true)})
 public class Patient {
-
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private String username;
+    private String password;
+    private boolean isAddmin;
 
-
-    private String ssn;
-    private String lastName;
-    private String firstName;
-    private String street;
-    private String city;
-    private String state;
-    private String zipCode;
-    private String birthDate;  // maybe use date object?
-
-    public Patient(String birthDate, String firstName, String lastName, String ssn) {
-        this.birthDate = birthDate;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ssn = ssn;
-
+    public Patient(String username, String password) {
+        this.username = username;
+        this.password = password;
+        isAddmin = false;
     }
 
     @Override
@@ -38,12 +28,12 @@ public class Patient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return id == patient.id && Objects.equals(ssn, patient.ssn) && Objects.equals(lastName, patient.lastName) && Objects.equals(firstName, patient.firstName) && Objects.equals(street, patient.street) && Objects.equals(city, patient.city) && Objects.equals(state, patient.state) && Objects.equals(zipCode, patient.zipCode) && Objects.equals(birthDate, patient.birthDate);
+        return id == patient.id && isAddmin == patient.isAddmin && Objects.equals(username, patient.username) && Objects.equals(password, patient.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ssn, lastName, firstName, street, city, state, zipCode, birthDate);
+        return Objects.hash(id, username, password, isAddmin);
     }
 
     public int getId() {
@@ -54,67 +44,27 @@ public class Patient {
         this.id = id;
     }
 
-    public String getSsn() {
-        return ssn;
+    public String getUsername() {
+        return username;
     }
 
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public boolean isAddmin() {
+        return isAddmin;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setAddmin(boolean addmin) {
+        isAddmin = addmin;
     }
 }

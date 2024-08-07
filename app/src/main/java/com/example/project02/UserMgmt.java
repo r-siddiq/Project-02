@@ -10,54 +10,81 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project02.Database.AppDatabase;
 import com.example.project02.Database.AppRepository;
+import com.example.project02.Database.PatientDAO;
 import com.example.project02.Database.entities.Patient;
 import com.example.project02.Database.entities.Prescription;
-import com.example.project02.databinding.ActivityAdminBinding;
+import com.example.project02.databinding.ActivityUserMgmtBinding;
+import com.example.project02.viewHolders.PillHubAdapter;
+import com.example.project02.viewHolders.PillHubViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class AdminActivity extends AppCompatActivity {
+public class UserMgmt extends AppCompatActivity {
+
+    private static final int LOGGED_OUT = -1;
+    int loggedInPatientID = LOGGED_OUT;
+    private Patient patient;
+
     private static final String ADMIN_ACTIVITY_USER_ID = "com.example.project02.ADMIN_ACTIVITY_USER_ID";
     private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";
-    private ActivityAdminBinding binding;
     private AppRepository repository;
-    private static final int LOGGED_OUT = -1;
+    private PillHubViewModel pillHubViewModel;
+    private ActivityUserMgmtBinding binding;
 
-    private Patient patient;
-    int loggedInPatientID = LOGGED_OUT;
+    String targetUsername;
 
-
-    public static Intent adminActivityIntentFactory(Context applicationContext, int patientId) {
-        Intent intent = new Intent(applicationContext, AdminActivity.class);
+    public static Intent userMgmtIntentFactory(Context applicationContext, int patientId) {
+        Intent intent = new Intent(applicationContext, UserMgmt.class);
         intent.putExtra(ADMIN_ACTIVITY_USER_ID, patientId);
         return intent;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAdminBinding.inflate(getLayoutInflater());
+        binding = ActivityUserMgmtBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        pillHubViewModel = new ViewModelProvider(this).get(PillHubViewModel.class);
+
+        RecyclerView recyclerView = binding.logDisplayRecyclerView;
+        final PillHubAdapter adapter = new PillHubAdapter(new PillHubAdapter.PatientDiff());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         repository = AppRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
-        invalidateOptionsMenu();
 
-        updateDisplay();
+        pillHubViewModel.getAllPatientsById(loggedInPatientID).observe(this, patients -> {
+            adapter.submitList(patients);
+        });
 
-        //Go to list of Users
-        binding.customerInfo.setOnClickListener(new View.OnClickListener() {
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = UserMgmt.userMgmtIntentFactory(getApplicationContext(),loggedInPatientID);
-                startActivity(intent);
+                startActivity(AdminActivity.adminActivityIntentFactory(getApplicationContext(), loggedInPatientID));
             }
         });
+
+        binding.deleteUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteUser();
+            }
+        });
+
     }
 
     @Override
@@ -86,7 +113,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void showLogoutDialog(){
-        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(AdminActivity.this);
+        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(UserMgmt.this);
         final AlertDialog alertDialog = alerBuilder.create();
         alerBuilder.setMessage("Logout?");
         alerBuilder.setPositiveButton("Logout?", new DialogInterface.OnClickListener() {
@@ -121,7 +148,6 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void loginUser(Bundle savedInstanceState) {
-        //Check shared preference for logged in user
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         loggedInPatientID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
 
@@ -142,4 +168,39 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void deleteUser() {
+        targetUsername = binding.enterPatient.getText().toString();
+        if (targetUsername.isEmpty()) {
+            toastMaker("Target username is empty.");
+            return;
+        }
+
+        repository.getPatientByUserId(loggedInPatientID).observe(this, loggedInPatient -> {
+            if (loggedInPatient == null) {
+                toastMaker("Error getting logged-in user details.");
+                return;
+            }
+
+            repository.getPatientByUsername(targetUsername).observe(this, targetPatient -> {
+                if (targetPatient == null) {
+                    toastMaker("No such user.");
+                    return;
+                }
+
+                if (loggedInPatient.getUsername().equals(targetPatient.getUsername())) {
+                    toastMaker("Cannot delete your own account.");
+                    return;
+                }
+
+                repository.deletePatient(targetPatient); // Use repository to delete
+                toastMaker("User deleted.");
+            });
+        });
+    }
+
+    private void toastMaker(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }
