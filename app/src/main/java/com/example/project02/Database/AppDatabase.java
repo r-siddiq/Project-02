@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
     // Singleton method
     private static volatile AppDatabase instance;
     private static final int NUMBER_OF_THREADS = 4; //Maximum number of threads in database
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static AppDatabase getInstance(final Context context) {
         if (instance == null) {

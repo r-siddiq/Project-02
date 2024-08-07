@@ -86,4 +86,14 @@ public class AppRepository {
     public LiveData<List<Patient>> getAllPatientsByUserId(int patientId) {
         return patientDAO.getAllPatientsByPatientIdLiveData(patientId);
     }
+
+    public void deletePatientByUsername(String username){
+        AppDatabase.databaseWriteExecutor.execute(() -> patientDAO.deleteByUsername(username));
+    }
+
+    public void deletePatient(Patient patient) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            patientDAO.delete(patient);
+        });
+    }
 }
