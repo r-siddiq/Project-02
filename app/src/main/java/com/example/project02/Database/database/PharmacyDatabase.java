@@ -1,23 +1,20 @@
 package com.example.project02.Database.database;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import com.example.project02.Database.database.entities.Patient;
 import com.example.project02.Database.database.entities.Prescription;
 import com.example.project02.Database.database.entities.Pharmacy;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Patient.class, Pharmacy.class, Prescription.class}, version = 1, exportSchema = false)
 public abstract class PharmacyDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME = "pillHub_database";
+
 
     // Singleton method
     private static volatile PharmacyDatabase instance;
