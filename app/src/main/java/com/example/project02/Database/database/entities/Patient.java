@@ -10,7 +10,6 @@ public class Patient {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-
     private String ssn;
     private String lastName;
     private String firstName;

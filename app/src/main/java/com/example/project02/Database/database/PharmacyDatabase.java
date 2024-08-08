@@ -9,11 +9,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.project02.Database.database.entities.Patient;
 import com.example.project02.Database.database.entities.Prescription;
 import com.example.project02.Database.database.entities.Pharmacy;
+import com.example.project02.Database.database.entities.Drug;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Patient.class, Pharmacy.class, Prescription.class}, version = 1, exportSchema = false)
+@Database(entities = {Patient.class, Pharmacy.class, Prescription.class, Drug.class}, version = 1, exportSchema = false)
 public abstract class PharmacyDatabase extends RoomDatabase {
+
+    public static final String DRUG_TABLE = "drugtable";
 
 
     // Singleton method
