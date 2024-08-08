@@ -4,6 +4,8 @@ import static com.example.project02.Database.PharmacyDatabase.PHARMACY_TABLE;
 import com.example.project02.Database.typeConverters.Converters;
 
 import androidx.room.*;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity(tableName = PHARMACY_TABLE)
@@ -13,16 +15,20 @@ public class Pharmacy {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    private int userId;
     private String name;
+    private LocalDateTime date;
     private String address;
     private String phone;
     private List<DrugCost> drugCosts;
 
-    public Pharmacy(String name, String address, String phone, List<DrugCost> drugCosts) {
+    public Pharmacy(String name,int userId, String address, String phone, List<DrugCost> drugCosts) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.drugCosts = drugCosts;
+        this.userId = userId;
+        date = LocalDateTime.now();
     }
 
     public Pharmacy() {

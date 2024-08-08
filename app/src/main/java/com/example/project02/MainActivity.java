@@ -16,8 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 
-import com.example.project02.Database.PharmacyRepository;
-import com.example.project02.Database.entities.Patient;
+import com.example.project02.Database.entities.User;
 import com.example.project02.Database.entities.Prescription;
 import com.example.project02.databinding.ActivityMainBinding;
 
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "GRP7_Pill_Hub";
 
     int loggedInPatientID = LOGGED_OUT;
-    private Patient patient;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         if(loggedInPatientID == LOGGED_OUT){
             return;
         }
-        LiveData<Patient> userObserver = repository.getPatientByUserId(loggedInPatientID);
+        LiveData<User> userObserver = repository.getPatientByUserId(loggedInPatientID);
         userObserver.observe(this, user -> {
-            this.patient = user;
-            if(this.patient != null){
+            this.user = user;
+            if(this.user != null){
                 invalidateOptionsMenu();
             }
         });
@@ -101,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
-        if(patient == null){
+        if(user == null){
             return false;
         }
-        item.setTitle(patient.getUsername());
+        item.setTitle(user.getUsername());
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {

@@ -4,8 +4,9 @@ import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 
-import com.example.project02.Database.entities.Drug;
+import com.example.project02.Database.entities.*;
 
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -17,9 +18,10 @@ import java.util.concurrent.Future;
 public class PharmacyRepository {
 
     private final DrugDAO drugDAO;
-    private final PatientDAO patientDAO;
+    private final UserDAO userDAO;
     private final PharmacyDAO pharmacyDAO;
     private final PrescriptionDAO prescriptionDAO;
+    private ArrayList<Pharmacy> pLogs;
     private static PharmacyRepository repository;
 
     /**
@@ -28,11 +30,12 @@ public class PharmacyRepository {
      * @param application the application context
      */
     private PharmacyRepository(Application application) {
-        PharmacyDatabase db = PharmacyDatabase.getInstance(application);
+        PharmacyDatabase db = PharmacyDatabase.getDatabase(application);
         this.drugDAO = db.drugDAO();
-        this.patientDAO = db.patientDAO();
+        this.userDAO = db.patientDAO();
         this.pharmacyDAO = db.pharmacyDAO();
         this.prescriptionDAO = db.prescriptionDAO();
+        this.pLogs = (ArrayList<Pharmacy>) this.pharmacyDAO.getAllRecords();
     }
 
     /**

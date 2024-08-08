@@ -17,22 +17,11 @@ public interface PharmacyDAO {
     void insert(Pharmacy pharmacy);
 
     @Query("SELECT * FROM " + PharmacyDatabase.PHARMACY_TABLE + " ORDER BY date DESC")
-    List<GymLog> getAllRecords();
+    List<Pharmacy> getAllRecords();
 
-    /**
-     * Retrieves all GymLog records for a specific user, ordered by date in descending order.
-     * @param loggedInUserId the ID of the user whose records are to be retrieved
-     * @return a list of GymLog records for the specified user
-     */
-    @Query("SELECT * FROM " + GymLogDatabase.GYM_LOG_TABLE + " WHERE userId = :loggedInUserId ORDER BY date DESC")
-    List<GymLog> getRecordsByUserId(int loggedInUserId);
+    @Query("SELECT * FROM " + PharmacyDatabase.PHARMACY_TABLE + " WHERE userId = :loggedInUserId ORDER BY date DESC")
+    List<Pharmacy> getRecordsByUserId(int loggedInUserId);
 
-    /**
-     * Retrieves all GymLog records for a specific user as LiveData, ordered by date in descending order.
-     * This allows for observing changes to the data in real-time.
-     * @param loggedInUserId the ID of the user whose records are to be retrieved
-     * @return a LiveData list of GymLog records for the specified user
-     */
-    @Query("SELECT * FROM " + GymLogDatabase.GYM_LOG_TABLE + " WHERE userId = :loggedInUserId ORDER BY date DESC")
-    LiveData<List<GymLog>> getRecordsByUserIdLiveData(int loggedInUserId);
+    @Query("SELECT * FROM " + PharmacyDatabase.PHARMACY_TABLE + " WHERE userId = :loggedInUserId ORDER BY date DESC")
+    LiveData<List<Pharmacy>> getRecordsByUserIdLiveData(int loggedInUserId);
 }

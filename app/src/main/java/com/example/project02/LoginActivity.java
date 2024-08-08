@@ -9,8 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
-import com.example.project02.Database.PharmacyRepository;
-import com.example.project02.Database.entities.Patient;
+import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             toastMaker("Username should not be blank.");
             return;
         }
-        LiveData<Patient> userObserver = repository.getPatientByUsername(username);
+        LiveData<User> userObserver = repository.getPatientByUsername(username);
         userObserver.observe(this, user -> {
             if(user != null){
                 String password = binding.enterPassword.getText().toString();

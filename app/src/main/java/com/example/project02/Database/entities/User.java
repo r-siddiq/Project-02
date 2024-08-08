@@ -1,19 +1,19 @@
 package com.example.project02.Database.entities;
 
-import static com.example.project02.Database.PharmacyDatabase.PATIENT_TABLE;
+import static com.example.project02.Database.PharmacyDatabase.USER_TABLE;
 
 import androidx.room.*;
 import java.util.*;
 
-@Entity(tableName = PATIENT_TABLE)
-public class Patient {
+@Entity(tableName = USER_TABLE)
+public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
     private String password;
     private boolean isAdmin;
 
-    public Patient(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         isAdmin = false;
@@ -23,8 +23,8 @@ public class Patient {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Patient patient = (Patient) o;
-        return id == patient.id && isAdmin == patient.isAdmin && Objects.equals(username, patient.username) && Objects.equals(password, patient.password);
+        User user = (User) o;
+        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
     @Override

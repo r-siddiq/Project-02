@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project02.Database.AppRepository;
-import com.example.project02.Database.entities.Patient;
+import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -105,11 +105,11 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        Patient patient = new Patient(newUsername, newPassword);
+        User user = new User(newUsername, newPassword);
         repository.getUserCountByUsername(newUsername).observe(this, count -> {
             if(count != null){
                 if(count == 0){
-                    repository.insertUser(patient);
+                    repository.insertUser(user);
                     toastMaker("User added.");
                     Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
                     startActivity(intent);
