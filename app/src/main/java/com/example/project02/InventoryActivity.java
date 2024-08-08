@@ -26,20 +26,20 @@ public class InventoryActivity extends AppCompatActivity {
 
         Button checkInventoryButton = findViewById(R.id.checkInventory);
         checkInventoryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(InventoryActivity.this, CheckInventoryActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(InventoryActivity.this, CheckInventoryActivity.class);
+//            startActivity(intent);
         });
 
         Button addInventoryButton = findViewById(R.id.addInventory);
         addInventoryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class);
+//            startActivity(intent);
         });
 
         Button removeInventoryButton = findViewById(R.id.removeInventory);
         removeInventoryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(InventoryActivity.this, RemoveInventoryActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(InventoryActivity.this, RemoveInventoryActivity.class);
+//            startActivity(intent);
         });
     }
 }

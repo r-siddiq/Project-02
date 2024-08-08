@@ -2,53 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Database.AdminActivity">
+    tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/welcomeAdmin"
+        android:id="@+id/welcomeUser"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:textSize="28sp"
-        android:text="Welcome!"
+        android:layout_height="wrap_content"
+        android:text="Welcome User!"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/orderRequests"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order Requests"
-        app:layout_constraintTop_toBottomOf="@id/welcomeAdmin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Inventory"
-        app:layout_constraintTop_toBottomOf="@id/orderRequests"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/previousOrdersAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Previous Orders"
-        app:layout_constraintTop_toBottomOf="@id/inventory"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/customerInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Customer Info"
-        app:layout_constraintTop_toBottomOf="@id/previousOrdersAdmin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -57,9 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Place Order"
-        app:layout_constraintTop_toBottomOf="@id/previousOrdersAdmin"
+        app:layout_constraintTop_toBottomOf="@id/welcomeUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.8" />
 
     <Button
         android:id="@+id/orderStatus"
@@ -78,5 +43,6 @@
         app:layout_constraintTop_toBottomOf="@id/orderStatus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
