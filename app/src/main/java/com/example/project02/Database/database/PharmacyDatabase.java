@@ -46,7 +46,7 @@ public abstract class PharmacyDatabase extends RoomDatabase {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     PharmacyDatabase.class, DATABASE_NAME)
                             .fallbackToDestructiveMigration()
-                            .addCallback(addDefaultValues)
+//                            .addCallback(addDefaultValues)
                             .build();
                 }
             }
