@@ -135,10 +135,28 @@ public class PharmacyRepository {
         PharmacyDatabase.databaseWriteExecutor.execute(() -> userDAO.deleteByUsername(username));
     }
 
-    public void deleteUser(User patient) {
+    public void deleteUser(User user) {
         PharmacyDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.delete(patient);
+            userDAO.delete(user);
         });
+    }
+
+    /**
+     * Promotes a user to admin.
+     * @param user the User object with updated admin status
+     */
+    public void makeAdmin(User user) {
+        user.setAdmin(true);
+        PharmacyDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
+    }
+
+    /**
+     * Demotes a user from admin.
+     * @param user the User object with updated admin status
+     */
+    public void removeAdmin(User user) {
+        user.setAdmin(false);
+        PharmacyDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
     }
 
 }

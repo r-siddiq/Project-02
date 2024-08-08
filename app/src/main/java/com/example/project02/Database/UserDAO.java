@@ -36,4 +36,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + PharmacyDatabase.USER_TABLE + " WHERE id = :userId")
     LiveData<List<User>> getAllUsersByUserIdLiveData(int userId);
+
+    @Update
+    void update(User user);
 }
