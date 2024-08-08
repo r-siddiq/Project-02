@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         binding.adminCenterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =
+                Intent intent = AdminActionActivity.adminActionIntentFactory(getApplicationContext(),loggedInUserID);
             }
         });
         //updateDisplay();

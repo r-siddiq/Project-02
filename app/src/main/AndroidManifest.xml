@@ -22,7 +22,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminActivity"
+            android:name=".AdminActionActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
