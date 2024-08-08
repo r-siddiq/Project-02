@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.User;
@@ -100,25 +102,42 @@ public class SignUpActivity extends AppCompatActivity {
         insertNewUser();
     }
 
-    private void insertNewUser(){
-        if(newUsername.isEmpty()){
+    private void insertNewUser() {
+        if (newUsername.isEmpty()) {
+            toastMaker("Username cannot be empty.");
             return;
         }
 
-        User user = new User(newUsername, newPassword);
-        repository.getUserCountByUsername(newUsername).observe(this, count -> {
-            if(count != null){
-                if(count == 0){
-                    repository.insertUser(user);
-                    toastMaker("User added.");
-                    Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-                    startActivity(intent);
-                }else {
-                    toastMaker("User already exists.");
+        // Create a LiveData object to observe user count
+        LiveData<Integer> userCountLiveData = repository.getUserCountByUsername(newUsername);
+
+        // Create a one-time observer
+        Observer<Integer> userCountObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer count) {
+                if (count != null) {
+                    if (count == 0) {
+                        // No existing user with the same username
+                        User user = new User(newUsername, newPassword);
+                        repository.insertUser(user);
+                        toastMaker("User added.");
+
+                        // Redirect to login screen after user is added
+                        Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+                        startActivity(intent);
+                    } else {
+                        // User already exists
+                        toastMaker("User already exists.");
+                    }
+
+                    // Clean up observer after the operation is complete
+                    userCountLiveData.removeObserver(this);
                 }
             }
-        });
+        };
 
+        // Observe the user count LiveData
+        userCountLiveData.observe(this, userCountObserver);
     }
 
     private void toastMaker(String message) {

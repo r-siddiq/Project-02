@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = AdminActionActivity.adminActionIntentFactory(getApplicationContext(),loggedInUserID);
+                startActivity(intent);
             }
         });
         //updateDisplay();
