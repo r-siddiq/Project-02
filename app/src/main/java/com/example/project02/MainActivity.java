@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     int loggedInPatientID = LOGGED_OUT;
     private User user;
+    String targetUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
                 toastMaker("User deleted.");
             });
         });
+    }
+
+    private void toastMaker(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 /*    private void updateDisplay(){
