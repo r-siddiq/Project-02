@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isAdmin = user != null && user.isAdmin();
         binding.enterUserDelete.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
         binding.deleteUsers.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+
     }
 
     private void showLogoutDialog(){
@@ -143,6 +144,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alerBuilder.create().show();
+    }
+
+    private void deleteUser() {
+        targetUsername = binding.enterUserDelete.getText().toString();
+        if (targetUsername.isEmpty()) {
+            toastMaker("Target username is empty.");
+            return;
+        }
+
+        repository.getUsersByUserId(loggedInPatientID).observe(this, loggedInPatient -> {
+            if (loggedInPatient == null) {
+                toastMaker("Error getting logged-in user details.");
+                return;
+            }
+
+            repository.getUserByUsername(targetUsername).observe(this, targetPatient -> {
+                if (targetPatient == null) {
+                    toastMaker("No such user.");
+                    return;
+                }
+
+                if (loggedInPatient.getUsername().equals(targetPatient.getUsername())) {
+                    toastMaker("Cannot delete your own account.");
+                    return;
+                }
+
+                repository.deleteUser(targetPatient); // Use repository to delete
+                toastMaker("User deleted.");
+            });
+        });
     }
 
 /*    private void updateDisplay(){
