@@ -15,6 +15,6 @@ public interface PrescriptionDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Prescription gymlog);
 
-    @Query("SELECT * FROM " + AppDatabase.PRESCRIPTION_TABLE )
+    @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE )
     List<Prescription> getAllRecords();
 }
