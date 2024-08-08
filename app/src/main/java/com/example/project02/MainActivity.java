@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import androidx.annotation.NonNull;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             this.user = user;
             if(this.user != null){
                 invalidateOptionsMenu();
+                updateAdminViewsVisibility();
             }
         });
     }
@@ -114,6 +116,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void updateAdminViewsVisibility() {
+        boolean isAdmin = user != null && user.isAdmin();
+        binding.enterUserDelete.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        binding.deleteUsers.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
     }
 
     private void showLogoutDialog(){
