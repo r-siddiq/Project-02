@@ -65,6 +65,13 @@ public class AdminActionActivity extends AppCompatActivity {
             }
         });
 
+        binding.adminBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), loggedInUserID));
+            }
+        });
+
     }
     static Intent adminActionIntentFactory(Context context, int userId){
         Intent intent = new Intent(context, AdminActionActivity.class);
