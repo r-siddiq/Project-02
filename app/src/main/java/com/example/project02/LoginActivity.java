@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
-import com.example.project02.Database.AppRepository;
+import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.Patient;
 import com.example.project02.databinding.ActivityLoginBinding;
 

@@ -1,16 +1,19 @@
 package com.example.project02.Database;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.project02.Database.database.PrescriptionDAO;
 import com.example.project02.Database.entities.Patient;
 import com.example.project02.Database.entities.Prescription;
 import com.example.project02.Database.entities.Pharmacy;
 import com.example.project02.Database.entities.Drug;
+import com.example.project02.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,7 +28,7 @@ public abstract class PharmacyDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "pharmacy_database";
 
     // Singleton instance
-    private static volatile PharmacyDatabase instance;
+    private static volatile PharmacyDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4; // Maximum number of threads in database
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
@@ -35,20 +38,39 @@ public abstract class PharmacyDatabase extends RoomDatabase {
      * @param context the application context
      * @return the singleton instance of the PharmacyDatabase
      */
-    public static PharmacyDatabase getInstance(Context context) {
-        if (instance == null) {
+    static PharmacyDatabase getDatabase(final Context context) {
+        if (INSTANCE == null) {
             synchronized (PharmacyDatabase.class) {
-                if (instance == null) {
-                    instance = Room.databaseBuilder(context.getApplicationContext(),
-                                    PharmacyDatabase.class, DATABASE_NAME)
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    PharmacyDatabase.class,
+                                    DATABASE_NAME
+                            )
                             .fallbackToDestructiveMigration()
-//                            .addCallback(addDefaultValues)
+                            .addCallback(addDefaultValues)
                             .build();
                 }
             }
         }
-        return instance;
+        return INSTANCE;
     }
+
+    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            Log.i(MainActivity.TAG, "Database Created");
+            databaseWriteExecutor.execute(() -> {
+                PatientDAO dao = INSTANCE.patientDAO();
+                dao.deleteAll();
+                Pharmacy admin = new Pharmacy("admin1", "admin1");
+                admin.setAdmin(true);
+                dao.insert(admin);
+                User testUser1 = new User("testUser1", "testUser1");
+                dao.insert(testUser1);
+            });
+        }
+    };
 
     // Abstract methods to provide DAO instances
     public abstract DrugDAO drugDAO();

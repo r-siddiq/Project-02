@@ -28,5 +28,8 @@ public interface DrugDAO {
     LiveData<Drug> getDrugByName(String drugName);
 
     @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " WHERE id == :id")
-    LiveData<Drug> getUserByUserId(int id);
+    LiveData<Drug> getDrugById(int id);
+
+    @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " WHERE name == :drug")
+    void update(Drug drug);
 }

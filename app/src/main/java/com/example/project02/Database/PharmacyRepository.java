@@ -4,10 +4,8 @@ import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 
-import com.example.project02.Database.database.PrescriptionDAO;
-import com.example.project02.Database.database.entities.Drug;
+import com.example.project02.Database.entities.Drug;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -87,22 +85,24 @@ public class PharmacyRepository {
 
     /**
      * Retrieves a Drug record by ID.
-     * @param id the ID of the Drug
-     * @return the Drug record with the specified ID
+     * @param drugName the name of the Drug
+     * @return the Drug record with the specified name
      */
-    public LiveData<Drug> getDrugById(int id) {
-        return drugDAO.getDrugById(id);
+    public LiveData<Drug> getDrugByName(String drugName) {
+        return drugDAO.getDrugByName(drugName);
     }
+
+    public LiveData<Drug> getDrugById(int id) {
+        return drugDAO.getDrugByName(String.valueOf(id));
+    }
+
 
     /**
      * Retrieves all Drug records from the database.
      * @return a LiveData list of all Drug records
      */
-    public LiveData<List<Drug>> getAllDrugs() {
+    public LiveData<Drug> getAllDrugs() {
         return drugDAO.getAllDrugs();
     }
-
-    // Similarly, implement methods for Patient, Pharmacy, and Prescription entities
-    // ...
 
 }

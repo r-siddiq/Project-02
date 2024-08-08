@@ -1,19 +1,12 @@
 package com.example.project02.Database.entities;
 
 import static com.example.project02.Database.PharmacyDatabase.PRESCRIPTION_TABLE;
-
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
 import com.example.project02.Database.typeConverters.Converters;
 
+import androidx.room.*;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 @Entity(tableName = PRESCRIPTION_TABLE)
 @TypeConverters({Converters.class})

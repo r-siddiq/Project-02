@@ -29,7 +29,7 @@ public class Drug {
      * Default constructor required by Room.
      */
     public Drug() {
-        // Default constructor for Room
+        this.name = name;
     }
 
     /**
