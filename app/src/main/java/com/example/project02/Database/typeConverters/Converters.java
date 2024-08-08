@@ -54,4 +54,7 @@ public class Converters {
         }
         return drugCosts;
     }
+
+    //TODO: Add type converter for fills
+    //pharmacyID, dateFilled, and cost.
 }
