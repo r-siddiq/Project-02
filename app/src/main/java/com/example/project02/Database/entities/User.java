@@ -5,7 +5,7 @@ import static com.example.project02.Database.PharmacyDatabase.USER_TABLE;
 import androidx.room.*;
 import java.util.*;
 
-@Entity(tableName = USER_TABLE)
+@Entity(tableName = USER_TABLE, indices = {@Index(value = {"username"}, unique = true)})
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
