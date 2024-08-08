@@ -1,26 +1,22 @@
 package com.example.project02.Database.entities;
 
-import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import static com.example.project02.Database.PharmacyDatabase.PATIENT_TABLE;
 
+import androidx.room.*;
+import java.util.*;
 
-import com.example.project02.Database.AppDatabase;
-
-import java.util.Objects;
-
-@Entity(tableName = AppDatabase.PATIENT_TABLE, indices = {@Index(value = {"username"}, unique = true)})
+@Entity(tableName = PATIENT_TABLE)
 public class Patient {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
     private String password;
-    private boolean isAddmin;
+    private boolean isAdmin;
 
     public Patient(String username, String password) {
         this.username = username;
         this.password = password;
-        isAddmin = false;
+        isAdmin = false;
     }
 
     @Override
@@ -28,12 +24,12 @@ public class Patient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return id == patient.id && isAddmin == patient.isAddmin && Objects.equals(username, patient.username) && Objects.equals(password, patient.password);
+        return id == patient.id && isAdmin == patient.isAdmin && Objects.equals(username, patient.username) && Objects.equals(password, patient.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, isAddmin);
+        return Objects.hash(id, username, password, isAdmin);
     }
 
     public int getId() {
@@ -60,11 +56,11 @@ public class Patient {
         this.password = password;
     }
 
-    public boolean isAddmin() {
-        return isAddmin;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
-    public void setAddmin(boolean addmin) {
-        isAddmin = addmin;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
