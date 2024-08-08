@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.project02.Database.entities.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -106,6 +107,38 @@ public class PharmacyRepository {
      */
     public LiveData<Drug> getAllDrugs() {
         return drugDAO.getAllDrugs();
+    }
+
+    public void insertUser(User user){
+        PharmacyDatabase.databaseWriteExecutor.execute(()-> {
+            userDAO.insert(user);
+        });
+    }
+
+    public LiveData<User> getPatientByUsername(String username) {
+        return userDAO.getPatientByUsername(username);
+    }
+
+    public LiveData<User> getPatientByUserId(int userId) {
+        return userDAO.geUsersByUserId(userId);
+    }
+
+    public LiveData<Integer> getUserCountByUsername(String username){
+        return userDAO.countUsersByUsername(username);
+    }
+
+    public LiveData<List<User>> getAllUsersByUserId(int patientId) {
+        return userDAO.getAllUsersByUserIdLiveData(patientId);
+    }
+
+    public void deleteUserByUsername(String username){
+        PharmacyDatabase.databaseWriteExecutor.execute(() -> userDAO.deleteByUsername(username));
+    }
+
+    public void deleteUser(User patient) {
+        PharmacyDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.delete(patient);
+        });
     }
 
 }

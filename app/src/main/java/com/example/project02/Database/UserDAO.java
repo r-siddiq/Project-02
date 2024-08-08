@@ -23,11 +23,17 @@ public interface UserDAO {
     void deleteAll();
 
     @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE username == :username" )
-    LiveData<User> getPatientByUsername(String username);
+    LiveData<User> getUserByUsername(String username);
 
     @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE id == :userId" )
-    LiveData<User> getPatientByUserId(int userId);
+    LiveData<User> geUsersByUserId(int userId);
 
     @Query("SELECT COUNT(*) FROM " + PharmacyDatabase.USER_TABLE + " WHERE username = :username")
     LiveData<Integer> countUsersByUsername(String username);
+
+    @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE id == :userId" )
+    LiveData<List<User>> getAllPatientsByPatientIdLiveData(int userId);
+
+    @Query("DELETE FROM " + PharmacyDatabase.USER_TABLE + " WHERE username = :username")
+    void deleteByUsername(String username);
 }
