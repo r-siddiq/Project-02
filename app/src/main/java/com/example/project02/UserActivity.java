@@ -40,4 +40,5 @@ public class UserActivity extends AppCompatActivity {
 //            startActivity(intent);
         });
     }*/
+    }
 }
