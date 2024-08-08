@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        updateDisplay();
+        //updateDisplay();
     }
 
     static Intent mainActivityIntentFactory(Context context, int PatientID){
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         alerBuilder.create().show();
     }
 
-    private void updateDisplay(){
+/*    private void updateDisplay(){
         ArrayList<Prescription> allLogs = repository.getAllLogs();
         if(allLogs.isEmpty()){
         }
@@ -145,5 +145,5 @@ public class MainActivity extends AppCompatActivity {
         for(Prescription log : allLogs){
             sb.append(log);
         }
-    }
+    }*/
 }

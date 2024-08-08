@@ -15,7 +15,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.user_activity);
+/*        setContentView(R.layout.user_activity);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.welcomeUser), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -39,5 +39,5 @@ public class UserActivity extends AppCompatActivity {
 //            Intent intent = new Intent(UserActivity.this, PreviousOrdersActivity.class);
 //            startActivity(intent);
         });
-    }
+    }*/
 }
