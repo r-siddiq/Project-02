@@ -48,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+
+        binding.viewPrescriptionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = AdminActionActivity.adminActionIntentFactory(getApplicationContext(),loggedInUserID);
+                Intent intent = UserPrescriptionActivity.prescriptionActivityIntentFactory(getApplicationContext(), loggedInUserID);
+                startActivity(intent);
+            }
+        });
+
         binding.adminCenterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,12 +65,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //updateDisplay();
     }
 
-    static Intent mainActivityIntentFactory(Context context, int PatientID){
+    static Intent mainActivityIntentFactory(Context context, int userID){
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MAIN_ACTIVITY_USER_ID, PatientID);
+        intent.putExtra(MAIN_ACTIVITY_USER_ID, userID);
         return intent;
     }
 
@@ -147,13 +156,4 @@ public class MainActivity extends AppCompatActivity {
         alerBuilder.create().show();
     }
 
-/*    private void updateDisplay(){
-        ArrayList<Prescription> allLogs = repository.getAllLogs();
-        if(allLogs.isEmpty()){
-        }
-        StringBuilder sb = new StringBuilder();
-        for(Prescription log : allLogs){
-            sb.append(log);
-        }
-    }*/
 }
