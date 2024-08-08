@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             toastMaker("Username should not be blank.");
             return;
         }
-        LiveData<User> userObserver = repository.getPatientByUsername(username);
+        LiveData<User> userObserver = repository.getUserByUsername(username);
         userObserver.observe(this, user -> {
             if(user != null){
                 String password = binding.enterPassword.getText().toString();

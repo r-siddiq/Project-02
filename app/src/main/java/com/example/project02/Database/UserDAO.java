@@ -32,7 +32,7 @@ public interface UserDAO {
     LiveData<Integer> countUsersByUsername(String username);
 
     @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE id == :userId" )
-    LiveData<List<User>> getAllPatientsByPatientIdLiveData(int userId);
+    LiveData<List<User>> getAllUsersByUserIdLiveData(int userId);
 
     @Query("DELETE FROM " + PharmacyDatabase.USER_TABLE + " WHERE username = :username")
     void deleteByUsername(String username);

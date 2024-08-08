@@ -115,8 +115,8 @@ public class PharmacyRepository {
         });
     }
 
-    public LiveData<User> getPatientByUsername(String username) {
-        return userDAO.getPatientByUsername(username);
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
     }
 
     public LiveData<User> getPatientByUserId(int userId) {
