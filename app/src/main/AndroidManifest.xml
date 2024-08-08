@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".UserPrescriptionActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminActionActivity"
             android:exported="false" />
         <activity
@@ -20,9 +23,6 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminActionActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
