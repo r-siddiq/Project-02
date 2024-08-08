@@ -8,28 +8,28 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.project02.Database.entities.Patient;
-import com.example.project02.Database.entities.Prescription;
-import com.example.project02.Database.entities.Pharmacy;
+import com.example.project02.Database.database.entities.Patient;
+import com.example.project02.Database.database.entities.Prescription;
+import com.example.project02.Database.database.entities.Pharmacy;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Patient.class, Pharmacy.class, Prescription.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
+public abstract class PharmacyDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "pillHub_database";
 
     // Singleton method
-    private static volatile AppDatabase instance;
+    private static volatile PharmacyDatabase instance;
     private static final int NUMBER_OF_THREADS = 4; //Maximum number of threads in database
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static AppDatabase getInstance(Context context) {
+    public static PharmacyDatabase getInstance(Context context) {
         if (instance == null) {
-            synchronized (AppDatabase.class) {
+            synchronized (PharmacyDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, DATABASE_NAME)
+                                    PharmacyDatabase.class, DATABASE_NAME)
                             .fallbackToDestructiveMigration()
                             .addCallback(addDeafultValues)
                             .build();

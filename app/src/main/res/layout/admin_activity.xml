@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:textSize="28sp"
-        android:text="Welcome Admin!"
+        android:text="Welcome!"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -49,6 +49,33 @@
         android:layout_height="wrap_content"
         android:text="Customer Info"
         app:layout_constraintTop_toBottomOf="@id/previousOrdersAdmin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/placeOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Place Order"
+        app:layout_constraintTop_toBottomOf="@id/previousOrdersAdmin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/orderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Status"
+        app:layout_constraintTop_toBottomOf="@id/placeOrder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/previousOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous Orders"
+        app:layout_constraintTop_toBottomOf="@id/orderStatus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
