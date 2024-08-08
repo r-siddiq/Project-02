@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.project02.Database.entities.Drug;
 
@@ -30,6 +31,6 @@ public interface DrugDAO {
     @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " WHERE id == :id")
     LiveData<Drug> getDrugById(int id);
 
-    @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " WHERE name == :drug")
+    @Update
     void update(Drug drug);
 }

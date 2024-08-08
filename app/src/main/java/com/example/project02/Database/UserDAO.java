@@ -16,24 +16,24 @@ public interface UserDAO {
     @Delete
     void delete(User user);
 
-    @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " ORDER BY username")
+    @Query("SELECT * FROM " + PharmacyDatabase.USER_TABLE + " ORDER BY username")
     LiveData<List<User>> getAllUsers();
 
-    @Query("DELETE from " + PharmacyDatabase.USER_TABLE)
+    @Query("DELETE FROM " + PharmacyDatabase.USER_TABLE)
     void deleteAll();
 
-    @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE username == :username" )
+    @Query("SELECT * FROM " + PharmacyDatabase.USER_TABLE + " WHERE username = :username")
     LiveData<User> getUserByUsername(String username);
 
-    @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE id == :userId" )
-    LiveData<User> geUsersByUserId(int userId);
+    @Query("SELECT * FROM " + PharmacyDatabase.USER_TABLE + " WHERE id = :userId")
+    LiveData<User> getUsersByUserId(int userId);
 
     @Query("SELECT COUNT(*) FROM " + PharmacyDatabase.USER_TABLE + " WHERE username = :username")
     LiveData<Integer> countUsersByUsername(String username);
 
-    @Query("SELECT * from " + PharmacyDatabase.USER_TABLE + " WHERE id == :userId" )
-    LiveData<List<User>> getAllUsersByUserIdLiveData(int userId);
-
     @Query("DELETE FROM " + PharmacyDatabase.USER_TABLE + " WHERE username = :username")
     void deleteByUsername(String username);
+
+    @Query("SELECT * FROM " + PharmacyDatabase.USER_TABLE + " WHERE id = :userId")
+    LiveData<List<User>> getAllUsersByUserIdLiveData(int userId);
 }

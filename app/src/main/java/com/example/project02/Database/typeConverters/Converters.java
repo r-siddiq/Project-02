@@ -3,6 +3,7 @@ package com.example.project02.Database.typeConverters;
 import androidx.room.TypeConverter;
 
 import com.example.project02.Database.entities.Pharmacy;
+import com.example.project02.Database.entities.Prescription;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -64,5 +65,48 @@ public class Converters {
             }
         }
         return drugCosts;
+    }
+
+    @TypeConverter
+    public String fromFillRequestList(List<Prescription.FillRequest> fills) {
+        if (fills == null) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Prescription.FillRequest fill : fills) {
+            if (sb.length() > 0) {
+                sb.append(";");
+            }
+            sb.append(fill.getPharmacyID())
+                    .append(",")
+                    .append(fill.getDateFilled())
+                    .append(",")
+                    .append(fill.getCost());
+        }
+        return sb.toString();
+    }
+
+    @TypeConverter
+    public List<Prescription.FillRequest> toFillRequestList(String data) {
+        List<Prescription.FillRequest> fills = new ArrayList<>();
+        if (data == null || data.isEmpty()) {
+            return fills;
+        }
+        String[] entries = data.split(";");
+        for (String entry : entries) {
+            String[] parts = entry.split(",");
+            if (parts.length == 3) {
+                int pharmacyID;
+                try {
+                    pharmacyID = Integer.parseInt(parts[0]);
+                } catch (NumberFormatException e) {
+                    continue; // Skip invalid pharmacy IDs
+                }
+                String dateFilled = parts[1];
+                String cost = parts[2];
+                fills.add(new Prescription.FillRequest(pharmacyID, dateFilled, cost));
+            }
+        }
+        return fills;
     }
 }

@@ -33,7 +33,7 @@ public class PharmacyRepository {
     private PharmacyRepository(Application application) {
         PharmacyDatabase db = PharmacyDatabase.getDatabase(application);
         this.drugDAO = db.drugDAO();
-        this.userDAO = db.patientDAO();
+        this.userDAO = db.userDAO();
         this.pharmacyDAO = db.pharmacyDAO();
         this.prescriptionDAO = db.prescriptionDAO();
         this.pLogs = (ArrayList<Pharmacy>) this.pharmacyDAO.getAllRecords();
@@ -119,8 +119,8 @@ public class PharmacyRepository {
         return userDAO.getUserByUsername(username);
     }
 
-    public LiveData<User> getPatientByUserId(int userId) {
-        return userDAO.geUsersByUserId(userId);
+    public LiveData<User> getUsersByUserId(int userId) {
+        return userDAO.getUsersByUserId(userId);
     }
 
     public LiveData<Integer> getUserCountByUsername(String username){

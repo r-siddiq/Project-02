@@ -76,7 +76,6 @@ public abstract class PharmacyDatabase extends RoomDatabase {
 
     // Abstract methods to provide DAO instances
     public abstract DrugDAO drugDAO();
-    public abstract UserDAO patientDAO();
     public abstract PharmacyDAO pharmacyDAO();
     public abstract PrescriptionDAO prescriptionDAO();
 }

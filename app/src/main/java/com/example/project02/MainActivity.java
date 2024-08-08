@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if(loggedInPatientID == LOGGED_OUT){
             return;
         }
-        LiveData<User> userObserver = repository.getPatientByUserId(loggedInPatientID);
+        LiveData<User> userObserver = repository.getUsersByUserId(loggedInPatientID);
         userObserver.observe(this, user -> {
             this.user = user;
             if(this.user != null){
