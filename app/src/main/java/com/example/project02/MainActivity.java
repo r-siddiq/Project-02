@@ -10,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     int loggedInUserID = LOGGED_OUT;
     private User user;
-    String targetUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,28 +48,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        binding.deleteUsersButton.setOnClickListener(new View.OnClickListener() {
+        binding.adminCenterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteUser();
+                Intent intent =
             }
         });
-
-        binding.makeAdminButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                makeAdmin();
-            }
-        });
-
-        binding.demoteAdminButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                demoteAdmin();
-            }
-        });
-
-
         //updateDisplay();
     }
 
@@ -140,10 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateAdminViewsVisibility() {
         boolean isAdmin = user != null && user.isAdmin();
-        binding.enterUsernameAdmin.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
-        binding.deleteUsersButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
-        binding.makeAdminButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
-        binding.demoteAdminButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE );
+        binding.adminOptions.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        binding.adminCenterButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
     }
 
     private void showLogoutDialog(){
@@ -165,147 +144,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alerBuilder.create().show();
-    }
-
-    private void deleteUser() {
-        targetUsername = binding.enterUsernameAdmin.getText().toString();
-        if (targetUsername.isEmpty()) {
-            toastMaker("Target username is empty.");
-            return;
-        }
-
-        // Observe the logged-in user details
-        LiveData<User> loggedInUserLiveData = repository.getUsersByUserId(loggedInUserID);
-        loggedInUserLiveData.observe(this, loggedInUser -> {
-            if (loggedInUser == null) {
-                toastMaker("Error getting logged-in user details.");
-                loggedInUserLiveData.removeObservers(this); // Clean up observer
-                return;
-            }
-
-            // Observe the target user details
-            LiveData<User> targetUserLiveData = repository.getUserByUsername(targetUsername);
-            targetUserLiveData.observe(this, targetUser -> {
-                if (targetUser == null) {
-                    toastMaker("No such user.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                } else if (loggedInUser.getUsername().equals(targetUser.getUsername())) {
-                    toastMaker("Cannot delete your own account.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                }
-
-                // Perform the user deletion
-                repository.deleteUser(targetUser);
-                toastMaker("User deleted.");
-
-                // Clean up observers after operation
-                loggedInUserLiveData.removeObservers(this);
-                targetUserLiveData.removeObservers(this);
-            });
-        });
-    }
-
-    private void makeAdmin() {
-        targetUsername = binding.enterUsernameAdmin.getText().toString();
-        if (targetUsername.isEmpty()) {
-            toastMaker("Target username is empty.");
-            return;
-        }
-
-        // Observe the logged-in user details
-        LiveData<User> loggedInUserLiveData = repository.getUsersByUserId(loggedInUserID);
-        loggedInUserLiveData.observe(this, loggedInUser -> {
-            if (loggedInUser == null) {
-                toastMaker("Error getting logged-in user details.");
-                loggedInUserLiveData.removeObservers(this); // Clean up observer
-                return;
-            }
-
-            // Observe the target user details
-            LiveData<User> targetUserLiveData = repository.getUserByUsername(targetUsername);
-            targetUserLiveData.observe(this, targetUser -> {
-                if (targetUser == null) {
-                    toastMaker("No such user.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                } else if (targetUser.isAdmin()) {
-                    toastMaker("User is already an admin.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                }
-
-                // Perform the admin promotion
-                repository.makeAdmin(targetUser);
-                toastMaker(String.format("%s is now an admin.", targetUsername));
-
-                // Clean up observers after operation
-                loggedInUserLiveData.removeObservers(this);
-                targetUserLiveData.removeObservers(this);
-            });
-        });
-    }
-
-    private void demoteAdmin() {
-        targetUsername = binding.enterUsernameAdmin.getText().toString();
-        if (targetUsername.isEmpty()) {
-            toastMaker("Target username is empty.");
-            return;
-        }
-
-        // Observe the logged-in user details
-        LiveData<User> loggedInUserLiveData = repository.getUsersByUserId(loggedInUserID);
-        loggedInUserLiveData.observe(this, loggedInUser -> {
-            if (loggedInUser == null) {
-                toastMaker("Error getting logged-in user details.");
-                loggedInUserLiveData.removeObservers(this); // Clean up observer
-                return;
-            }
-
-            // Observe the target user details
-            LiveData<User> targetUserLiveData = repository.getUserByUsername(targetUsername);
-            targetUserLiveData.observe(this, targetUser -> {
-                if (targetUser == null) {
-                    toastMaker("No such user.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                }
-
-                // Check if the target user is an admin
-                if (!targetUser.isAdmin()) {
-                    toastMaker("User is not an admin.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                }
-
-                // Check if the logged-in user is trying to demote themselves
-                if (loggedInUser.getUsername().equals(targetUser.getUsername())) {
-                    toastMaker("Cannot demote your own account.");
-                    loggedInUserLiveData.removeObservers(this); // Clean up observer
-                    targetUserLiveData.removeObservers(this); // Clean up observer
-                    return;
-                }
-
-                // Perform the demotion
-                repository.removeAdmin(targetUser);
-                toastMaker(String.format("%s is no longer an admin.", targetUsername));
-
-                // Clean up observers after operation
-                loggedInUserLiveData.removeObservers(this);
-                targetUserLiveData.removeObservers(this);
-            });
-        });
-    }
-
-    private void toastMaker(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 /*    private void updateDisplay(){

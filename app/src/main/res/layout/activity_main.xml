@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome User!"
+        android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -44,44 +45,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/enterUsernameAdmin"
-        android:layout_width="220dp"
+    <TextView
+        android:id="@+id/adminOptions"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter Username"
-        android:gravity="center"
+        android:text="Admin Options"
+        android:layout_marginTop="25dp"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/previousOrders"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8"
         android:visibility="gone"/>
 
     <Button
-        android:id="@+id/deleteUsersButton"
+        android:id="@+id/adminCenterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete User"
-        app:layout_constraintTop_toBottomOf="@id/enterUsernameAdmin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/makeAdminButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Make admin"
-        app:layout_constraintTop_toBottomOf="@id/deleteUsersButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/demoteAdminButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Demote admin"
-        app:layout_constraintTop_toBottomOf="@id/makeAdminButton"
+        android:text="Admin Panel"
+        app:layout_constraintTop_toBottomOf="@id/adminOptions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
