@@ -24,7 +24,6 @@ public class Prescription {
     private String drugName;
     private int quantity;
     private int patientId;
-    private int doctorId;
     private String dateCreated;
     private int refills;
     private List<FillRequest> fills = new ArrayList<>();
@@ -84,16 +83,14 @@ public class Prescription {
      * @param drugName    the name of the drug prescribed
      * @param quantity    the quantity of the drug prescribed
      * @param patientId   the ID of the patient receiving the prescription
-     * @param doctorId    the ID of the doctor issuing the prescription
      * @param dateCreated the date the prescription was created
      * @param refills     the number of refills available
      * @param fills       the list of fill requests for this prescription
      */
-    public Prescription(String drugName, int quantity, int patientId, int doctorId, String dateCreated, int refills, List<FillRequest> fills) {
+    public Prescription(String drugName, int quantity, int patientId, String dateCreated, int refills, List<FillRequest> fills) {
         this.drugName = drugName;
         this.quantity = quantity;
         this.patientId = patientId;
-        this.doctorId = doctorId;
         this.dateCreated = dateCreated;
         this.refills = refills;
         this.fills = fills;
@@ -136,14 +133,6 @@ public class Prescription {
         this.patientId = patientId;
     }
 
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
-    }
-
     public String getDateCreated() {
         return dateCreated;
     }
@@ -176,7 +165,6 @@ public class Prescription {
         return rxid == that.rxid &&
                 quantity == that.quantity &&
                 patientId == that.patientId &&
-                doctorId == that.doctorId &&
                 refills == that.refills &&
                 Objects.equals(drugName, that.drugName) &&
                 Objects.equals(dateCreated, that.dateCreated) &&
@@ -185,13 +173,13 @@ public class Prescription {
 
     @Override
     public int hashCode() {
-        return Objects.hash(rxid, drugName, quantity, patientId, doctorId, dateCreated, refills, fills);
+        return Objects.hash(rxid, drugName, quantity, patientId, dateCreated, refills, fills);
     }
 
     @Override
     public String toString() {
         return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", patientId="
-                + patientId + ", doctorId=" + doctorId + ", dateCreated=" + dateCreated + ", refills=" + refills
+                + patientId + ", dateCreated=" + dateCreated + ", refills=" + refills
                 + ", fills=" + fills + "]";
     }
 
