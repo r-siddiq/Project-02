@@ -1,78 +1,171 @@
 package com.example.project02.Database.database.entities;
 
+import static com.example.project02.Database.database.PharmacyDatabase.PRESCRIPTION_TABLE;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import java.time.LocalDate;
+import com.example.project02.Database.database.typeConverters.Converters;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = PRESCRIPTION_TABLE)
+@TypeConverters({Converters.class})
 public class Prescription {
 
     @PrimaryKey(autoGenerate = true)
+    private int rxid;
+    private String drugName;
+    private int quantity;
+    private int patientId;
+    private int doctorId;
+    private String dateCreated;
+    private int refills;
+    private List<FillRequest> fills = new ArrayList<>();
 
-    private String medicationName;
-    private Integer medicationCount;
-    private Integer unitSize;
-    private String medicationStrength; //mg, g, etc.
-    private Integer medicationRefillTimes;
-    private LocalDate medicationRefillDate;
-    private String medicationInstructions;
+    /**
+     * Represents a fill request for a prescription.
+     */
+    public static class FillRequest {
+        private int pharmacyID;
+        private String dateFilled;
+        private String cost;
 
-    public String getMedicationName() {
-        return medicationName;
+        /**
+         * Constructs a new FillRequest with the specified details.
+         * @param pharmacyID the ID of the pharmacy that filled the prescription
+         * @param dateFilled the date the prescription was filled
+         * @param cost the cost of the prescription
+         */
+        public FillRequest(int pharmacyID, String dateFilled, String cost) {
+            this.pharmacyID = pharmacyID;
+            this.dateFilled = dateFilled;
+            this.cost = cost;
+        }
+
+        public int getPharmacyID() {
+            return pharmacyID;
+        }
+
+        public void setPharmacyID(int pharmacyID) {
+            this.pharmacyID = pharmacyID;
+        }
+
+        public String getDateFilled() {
+            return dateFilled;
+        }
+
+        public void setDateFilled(String dateFilled) {
+            this.dateFilled = dateFilled;
+        }
+
+        public String getCost() {
+            return cost;
+        }
+
+        public void setCost(String cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public String toString() {
+            return "PrescriptionFill [pharmacyID=" + pharmacyID + ", dateFilled=" + dateFilled + ", cost=" + cost + "]";
+        }
     }
 
-    public void setMedicationName(String medicationName) {
-        this.medicationName = medicationName;
+    /**
+     * Constructs a new Prescription with the specified details.
+     * @param drugName    the name of the drug prescribed
+     * @param quantity    the quantity of the drug prescribed
+     * @param patientId   the ID of the patient receiving the prescription
+     * @param doctorId    the ID of the doctor issuing the prescription
+     * @param dateCreated the date the prescription was created
+     * @param refills     the number of refills available
+     * @param fills       the list of fill requests for this prescription
+     */
+    public Prescription(String drugName, int quantity, int patientId, int doctorId, String dateCreated, int refills, List<FillRequest> fills) {
+        this.drugName = drugName;
+        this.quantity = quantity;
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.dateCreated = dateCreated;
+        this.refills = refills;
+        this.fills = fills;
     }
 
-    public Integer getMedicationCount() {
-        return medicationCount;
+    public Prescription() {
+        this.dateCreated = getCurrentDate();
+        this.fills = new ArrayList<>();
     }
 
-    public void setMedicationCount(Integer medicationCount) {
-        this.medicationCount = medicationCount;
+    public int getRxid() {
+        return rxid;
     }
 
-    public Integer getUnitSize() {
-        return unitSize;
+    public void setRxid(int rxid) {
+        this.rxid = rxid;
     }
 
-    public void setUnitSize(Integer unitSize) {
-        this.unitSize = unitSize;
+    public String getDrugName() {
+        return drugName;
     }
 
-    public String getMedicationStrength() {
-        return medicationStrength;
+    public void setDrugName(String drugName) {
+        this.drugName = drugName;
     }
 
-    public void setMedicationStrength(String medicationStrength) {
-        this.medicationStrength = medicationStrength;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public Integer getMedicationRefillTimes() {
-        return medicationRefillTimes;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setMedicationRefillTimes(Integer medicationRefillTimes) {
-        this.medicationRefillTimes = medicationRefillTimes;
+    public int getPatientId() {
+        return patientId;
     }
 
-    public LocalDate getMedicationRefillDate() {
-        return medicationRefillDate;
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
     }
 
-    public void setMedicationRefillDate(LocalDate medicationRefillDate) {
-        this.medicationRefillDate = medicationRefillDate;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public String getMedicationInstructions() {
-        return medicationInstructions;
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
     }
 
-    public void setMedicationInstructions(String medicationInstructions) {
-        this.medicationInstructions = medicationInstructions;
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public int getRefills() {
+        return refills;
+    }
+
+    public void setRefills(int refills) {
+        this.refills = refills;
+    }
+
+    public List<FillRequest> getFills() {
+        return fills;
+    }
+
+    public void setFills(List<FillRequest> fills) {
+        this.fills = fills;
     }
 
     @Override
@@ -80,20 +173,34 @@ public class Prescription {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Prescription that = (Prescription) o;
-        return Objects.equals(medicationName, that.medicationName) && Objects.equals(medicationCount, that.medicationCount) && Objects.equals(unitSize, that.unitSize) && Objects.equals(medicationStrength, that.medicationStrength) && Objects.equals(medicationRefillTimes, that.medicationRefillTimes) && Objects.equals(medicationInstructions, that.medicationInstructions);
+        return rxid == that.rxid &&
+                quantity == that.quantity &&
+                patientId == that.patientId &&
+                doctorId == that.doctorId &&
+                refills == that.refills &&
+                Objects.equals(drugName, that.drugName) &&
+                Objects.equals(dateCreated, that.dateCreated) &&
+                Objects.equals(fills, that.fills);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(medicationName, medicationCount, unitSize, medicationStrength, medicationRefillTimes, medicationInstructions);
+        return Objects.hash(rxid, drugName, quantity, patientId, doctorId, dateCreated, refills, fills);
     }
 
-    public Prescription(String medicationName, Integer medicationCount, Integer unitSize, String medicationStrength, Integer medicationRefillTimes, String medicationInstructions) {
-        this.medicationName = medicationName;
-        this.medicationCount = medicationCount;
-        this.unitSize = unitSize;
-        this.medicationStrength = medicationStrength;
-        this.medicationRefillTimes = medicationRefillTimes;
-        this.medicationInstructions = medicationInstructions;
+    @Override
+    public String toString() {
+        return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", patientId="
+                + patientId + ", doctorId=" + doctorId + ", dateCreated=" + dateCreated + ", refills=" + refills
+                + ", fills=" + fills + "]";
+    }
+
+    /**
+     * Gets the current date in the format yyyy-MM-dd.
+     * @return the current date as a string
+     */
+    private String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(new Date());
     }
 }

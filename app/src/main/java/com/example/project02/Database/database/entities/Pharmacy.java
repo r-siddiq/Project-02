@@ -1,86 +1,78 @@
 package com.example.project02.Database.database.entities;
 
+import static com.example.project02.Database.database.PharmacyDatabase.PHARMACY_TABLE;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.project02.Database.database.typeConverters.Converters;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = PHARMACY_TABLE)
+@TypeConverters(Converters.class)
 public class Pharmacy {
+
     @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    private String pharmName;
-    private String pharmCity;
-    private String pharmStreet;
-    private String pharmState;
-    private String pharmZipCode;
-    private ArrayList<String> inventory; //Inventory of medication?
-    private ArrayList<Integer> pharmHours; //hours of operation
-    private ArrayList<String> pharmDays; //Days open
+    private String name;
+    private String address;
+    private String phone;
+    private List<DrugCost> drugCosts;
 
-    public String getPharmName() {
-        return pharmName;
+    public Pharmacy(String name, String address, String phone, List<DrugCost> drugCosts) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.drugCosts = drugCosts;
     }
 
-    public void setPharmName(String pharmName) {
-        this.pharmName = pharmName;
+    public Pharmacy() {
+        this.drugCosts = new ArrayList<>();
     }
 
-    public String getPharmCity() {
-        return pharmCity;
+    public int getId() {
+        return id;
     }
 
-    public void setPharmCity(String pharmCity) {
-        this.pharmCity = pharmCity;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getPharmStreet() {
-        return pharmStreet;
+    public String getName() {
+        return name;
     }
 
-    public void setPharmStreet(String pharmStreet) {
-        this.pharmStreet = pharmStreet;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPharmState() {
-        return pharmState;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPharmState(String pharmState) {
-        this.pharmState = pharmState;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getPharmZipCode() {
-        return pharmZipCode;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPharmZipCode(String pharmZipCode) {
-        this.pharmZipCode = pharmZipCode;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public ArrayList<String> getInventory() {
-        return inventory;
+    public List<DrugCost> getDrugCosts() {
+        return drugCosts;
     }
 
-    public void setInventory(ArrayList<String> inventory) {
-        this.inventory = inventory;
-    }
-
-    public ArrayList<Integer> getPharmHours() {
-        return pharmHours;
-    }
-
-    public void setPharmHours(ArrayList<Integer> pharmHours) {
-        this.pharmHours = pharmHours;
-    }
-
-    public ArrayList<String> getPharmDats() {
-        return pharmDays;
-    }
-
-    public void setPharmDats(ArrayList<String> pharmDats) {
-        this.pharmDays = pharmDats;
+    public void setDrugCosts(List<DrugCost> drugCosts) {
+        this.drugCosts = drugCosts;
     }
 
     @Override
@@ -88,22 +80,46 @@ public class Pharmacy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pharmacy pharmacy = (Pharmacy) o;
-        return Objects.equals(pharmName, pharmacy.pharmName) && Objects.equals(pharmCity, pharmacy.pharmCity) && Objects.equals(pharmStreet, pharmacy.pharmStreet) && Objects.equals(pharmState, pharmacy.pharmState) && Objects.equals(pharmZipCode, pharmacy.pharmZipCode) && Objects.equals(pharmHours, pharmacy.pharmHours) && Objects.equals(pharmDays, pharmacy.pharmDays);
+        return id == pharmacy.id &&
+                Objects.equals(name, pharmacy.name) &&
+                Objects.equals(address, pharmacy.address) &&
+                Objects.equals(phone, pharmacy.phone) &&
+                Objects.equals(drugCosts, pharmacy.drugCosts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pharmName, pharmCity, pharmStreet, pharmState, pharmZipCode, pharmHours, pharmDays);
+        return Objects.hash(id, name, address, phone, drugCosts);
     }
 
-    public Pharmacy(String pharmName, String pharmCity, String pharmStreet, String pharmState, String pharmZipCode, ArrayList<String> inventory, ArrayList<Integer> pharmHours, ArrayList<String> pharmDats) {
-        this.pharmName = pharmName;
-        this.pharmCity = pharmCity;
-        this.pharmStreet = pharmStreet;
-        this.pharmState = pharmState;
-        this.pharmZipCode = pharmZipCode;
-        this.pharmHours = pharmHours;
-        this.pharmDays = pharmDats;
-        inventory = new ArrayList<String>();
+    public static class DrugCost {
+        private String drugName;
+        private double cost;
+
+        public DrugCost(String drugName, double cost) {
+            this.drugName = drugName;
+            this.cost = cost;
+        }
+
+        public String getDrugName() {
+            return drugName;
+        }
+
+        public void setDrugName(String drugName) {
+            this.drugName = drugName;
+        }
+
+        public double getCost() {
+            return cost;
+        }
+
+        public void setCost(double cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public String toString() {
+            return "DrugCost [drugName=" + drugName + ", cost=" + cost + "]";
+        }
     }
 }
