@@ -43,6 +43,14 @@ public class Pharmacy {
         this.id = id;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public String getName() {
         return name;
     }
@@ -73,6 +81,14 @@ public class Pharmacy {
 
     public void setDrugCosts(List<DrugCost> drugCosts) {
         this.drugCosts = drugCosts;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override
