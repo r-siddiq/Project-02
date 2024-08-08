@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
+import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityLoginBinding;
 
@@ -16,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
 
-    private AppRepository repository;
+    private PharmacyRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = AppRepository.getRepository(getApplication());
+        repository = PharmacyRepository.getRepository(getApplication());
 
         //Login button clicked
         binding.login.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null){
                 String password = binding.enterPassword.getText().toString();
                 if(password.equals(user.getPassword()) && user.isAdmin()){
-                    startActivity(AdminActivity.adminActivityIntentFactory(getApplicationContext(), user.getId()));
+//                    startActivity(AdminActivity.adminActivityIntentFactory(getApplicationContext(), user.getId()));
                 } else if (password.equals(user.getPassword())) {
                     startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
                 } else{

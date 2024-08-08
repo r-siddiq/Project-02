@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 
+import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.User;
 import com.example.project02.Database.entities.Prescription;
 import com.example.project02.databinding.ActivityMainBinding;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOGGED_OUT = -1;
     private ActivityMainBinding binding;
 
-    private AppRepository repository;
+    private PharmacyRepository repository;
 
     public static final String TAG = "GRP7_Pill_Hub";
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        repository = AppRepository.getRepository(getApplication());
+        repository = PharmacyRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
 
