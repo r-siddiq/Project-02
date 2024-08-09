@@ -89,7 +89,7 @@ public class Prescription {
 
     @Override
     public String toString() {
-        return "Prescription for " + drugName +":\n" + "Quanitity: " + quantity + ", Refills: " +refills;
+        return "Prescription for " + drugName +":\n" + "Quantity: " + quantity + ", Refills: " +refills;
     }
 
     /**
