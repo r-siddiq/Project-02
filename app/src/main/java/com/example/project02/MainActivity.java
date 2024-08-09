@@ -64,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.newPrescriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = PrescriptionEntryActivity.prescriptionEntryIntentFactory(getApplicationContext(), loggedInUserID);
+                startActivity(intent);
+            }
+        });
     }
 
     static Intent mainActivityIntentFactory(Context context, int userID){
