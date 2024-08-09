@@ -62,7 +62,7 @@ public class UserDaoTest {
         // Update the user's password
         insertedUser.setPassword("newPassword");
         userDAO.update(insertedUser);
-        
+
         User updatedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUserUpdate"));
         assertNotNull(updatedUser);
         assertEquals("newPassword", updatedUser.getPassword());
