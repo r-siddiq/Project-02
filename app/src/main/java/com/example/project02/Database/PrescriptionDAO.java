@@ -1,5 +1,6 @@
 package com.example.project02.Database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -12,9 +13,13 @@ import java.util.List;
 
 @Dao
 public interface PrescriptionDAO {
+
+    @Query("DELETE FROM " + PharmacyDatabase.PRESCRIPTION_TABLE)
+    void deleteAll();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Prescription gymlog);
+    void insert(Prescription prescription);
 
     @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE )
-    List<Prescription> getAllRecords();
+    LiveData<List<Prescription>> getAllPrescriptions();
 }

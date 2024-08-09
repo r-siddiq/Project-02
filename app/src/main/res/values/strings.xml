@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project02</string>
+    <string name="app_name">Pill HUB</string>
     <string name="sign_up_title">Please Sign Up</string>
     <string name="username_hint">Enter Username</string>
     <string name="password_hint">Enter Password</string>

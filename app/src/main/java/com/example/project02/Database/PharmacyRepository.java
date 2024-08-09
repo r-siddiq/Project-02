@@ -20,9 +20,7 @@ public class PharmacyRepository {
 
     private final DrugDAO drugDAO;
     private final UserDAO userDAO;
-    private final PharmacyDAO pharmacyDAO;
     private final PrescriptionDAO prescriptionDAO;
-    private ArrayList<Pharmacy> pLogs;
     private static PharmacyRepository repository;
 
 
@@ -39,9 +37,7 @@ public class PharmacyRepository {
         PharmacyDatabase db = PharmacyDatabase.getDatabase(application);
         this.drugDAO = db.drugDAO();
         this.userDAO = db.userDAO();
-        this.pharmacyDAO = db.pharmacyDAO();
         this.prescriptionDAO = db.prescriptionDAO();
-        this.pLogs = (ArrayList<Pharmacy>) this.pharmacyDAO.getAllRecords();
     }
 
     /**
@@ -110,7 +106,7 @@ public class PharmacyRepository {
      * Retrieves all Drug records from the database.
      * @return a LiveData list of all Drug records
      */
-    public LiveData<Drug> getAllDrugs() {
+    public LiveData<List<Drug>> getAllDrugs() {
         return drugDAO.getAllDrugs();
     }
 
@@ -164,4 +160,13 @@ public class PharmacyRepository {
         PharmacyDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
     }
 
+    public void insertPrescription(Prescription prescription) {
+        PharmacyDatabase.databaseWriteExecutor.execute(() -> {
+            prescriptionDAO.insert(prescription);
+        });
+    }
+
+    public LiveData<List<Prescription>> getAllPrescriptions() {
+        return prescriptionDAO.getAllPrescriptions();
+    }
 }
