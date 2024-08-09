@@ -41,11 +41,14 @@ public class InventoryActivity extends AppCompatActivity {
 
 
         // Remove Inventory button click listener
-        binding.removeInventory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Implement logic to remove inventory items or remove option
-            }
+//        binding.removeInventory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO: Implement logic to remove inventory items or remove option
+//            }
+//        });
+        binding.backButton.setOnClickListener(v -> {
+            onBackPressed();
         });
     }
 
