@@ -8,26 +8,25 @@
     tools:context=".UserPrescriptionActivity">
 
     <TextView
-        android:id="@+id/prescriptionsTitle"
+        android:id="@+id/prescriptiontitle"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:text="Your Prescriptions"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_prescriptions"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/prescriptionsTitle"
-        app:layout_constraintBottom_toTopOf="@id/backButton"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="125dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="8dp"
-        android:clipToPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/prescriptiontitle"
         tools:listitem="@layout/activity_user_prescription"
         />
 
@@ -38,6 +37,6 @@
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/prescriptionsTitle" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerView_prescriptions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

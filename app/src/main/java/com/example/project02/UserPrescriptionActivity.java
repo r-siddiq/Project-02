@@ -14,18 +14,15 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project02.Database.PharmacyRepository;
-import com.example.project02.Database.PrescriptionDAO;
-import com.example.project02.Database.entities.Prescription;
 import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityUserPrescriptionBinding;
 import com.example.project02.viewHolders.PrescriptionAdapter;
-
-import java.util.List;
+import com.example.project02.viewHolders.PrescriptionViewModel;
 
 public class UserPrescriptionActivity extends AppCompatActivity {
 
@@ -38,6 +35,7 @@ public class UserPrescriptionActivity extends AppCompatActivity {
     private PrescriptionAdapter adapter;
 
     private PharmacyRepository repository;
+    private PrescriptionViewModel prescriptionViewModel;
 
 
     int loggedInUserID = LOGGED_OUT;
@@ -54,19 +52,24 @@ public class UserPrescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserPrescriptionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        repository = PharmacyRepository.getRepository(getApplication());
-        loginUser(savedInstanceState);
-        invalidateOptionsMenu();
 
-        // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recyclerView_prescriptions);
+        prescriptionViewModel = new ViewModelProvider(this).get(PrescriptionViewModel.class);
+
+        RecyclerView recyclerView = binding.recyclerViewPrescriptions;
+        final PrescriptionAdapter adapter = new PrescriptionAdapter(new PrescriptionAdapter.PrescriptionDiff());
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        pharmacyRepository.getAllPrescriptions().observe(this, new Observer<List<Prescription>>() {            @Override
-            public void onChanged(List<Prescription> prescriptionList) {
-                // This method is called whenever the data is updated
-                adapter = new PrescriptionAdapter(prescriptionList);
-                recyclerView.setAdapter(adapter);
+        repository = PharmacyRepository.getRepository(getApplication());
+        loginUser(savedInstanceState);
+
+        repository.getUsersByUserId(loggedInUserID).observe(this, user -> {
+            if (user != null) {
+                this.user = user;
+                String username = user.getUsername();
+                prescriptionViewModel.getAllLogsByUsername(username).observe(this, prescriptions -> {
+                    adapter.submitList(prescriptions);
+                });
             }
         });
 

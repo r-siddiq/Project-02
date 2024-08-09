@@ -21,56 +21,6 @@ public class Prescription {
     private int refills;
 
     /**
-     * Represents a fill request for a prescription.
-     */
-    public static class FillRequest {
-        private int pharmacyID;
-        private String dateFilled;
-        private String cost;
-
-        /**
-         * Constructs a new FillRequest with the specified details.
-         * @param pharmacyID the ID of the pharmacy that filled the prescription
-         * @param dateFilled the date the prescription was filled
-         * @param cost the cost of the prescription
-         */
-        public FillRequest(int pharmacyID, String dateFilled, String cost) {
-            this.pharmacyID = pharmacyID;
-            this.dateFilled = dateFilled;
-            this.cost = cost;
-        }
-
-        public int getPharmacyID() {
-            return pharmacyID;
-        }
-
-        public void setPharmacyID(int pharmacyID) {
-            this.pharmacyID = pharmacyID;
-        }
-
-        public String getDateFilled() {
-            return dateFilled;
-        }
-
-        public void setDateFilled(String dateFilled) {
-            this.dateFilled = dateFilled;
-        }
-
-        public String getCost() {
-            return cost;
-        }
-
-        public void setCost(String cost) {
-            this.cost = cost;
-        }
-
-        @Override
-        public String toString() {
-            return "PrescriptionFill [pharmacyID=" + pharmacyID + ", dateFilled=" + dateFilled + ", cost=" + cost + "]";
-        }
-    }
-
-    /**
      * Constructs a new Prescription with the specified details.
      * @param drugName    the name of the drug prescribed
      * @param quantity    the quantity of the drug prescribed
@@ -139,9 +89,7 @@ public class Prescription {
 
     @Override
     public String toString() {
-        return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", Patient Name="
-                + username +  ", refills=" + refills
-                + "]";
+        return "Prescription for " + drugName +":\n" + "Quanitity: " + quantity + ", Refills: " +refills;
     }
 
     /**

@@ -33,4 +33,7 @@ public interface PrescriptionDAO {
 
     @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE + " WHERE drugName = :drugName")
     LiveData<Prescription> getPrescriptionByDrugName(String drugName);
+
+    @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE + " WHERE username = :username")
+    LiveData<List<Prescription>> getAllRecordsByUsernameLiveData(String username);
 }
