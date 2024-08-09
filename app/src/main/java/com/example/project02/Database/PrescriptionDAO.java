@@ -22,4 +22,7 @@ public interface PrescriptionDAO {
 
     @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE )
     LiveData<List<Prescription>> getAllPrescriptions();
+
+    @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE + " WHERE patientId = :loggedInUserID")
+    LiveData<List<Prescription>> getAllRecordsByUserIdLiveData(int loggedInUserID);
 }
