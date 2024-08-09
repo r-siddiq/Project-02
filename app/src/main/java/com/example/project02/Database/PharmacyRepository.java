@@ -101,7 +101,7 @@ public class PharmacyRepository {
      * Retrieves all Drug records from the database.
      * @return a LiveData list of all Drug records
      */
-    public LiveData<Drug> getAllDrugs() {
+    public LiveData<List<Drug>> getAllDrugs() {
         return drugDAO.getAllDrugs();
     }
 

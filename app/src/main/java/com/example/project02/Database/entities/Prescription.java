@@ -14,6 +14,7 @@ public class Prescription {
 
     @PrimaryKey(autoGenerate = true)
     private int rxid;
+
     private String drugName;
     private int quantity;
     private String username;
