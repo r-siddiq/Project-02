@@ -156,7 +156,6 @@ public class PharmacyDatabaseTest {
         prescriptionDAO.insert(prescription);
 
         prescriptionDAO.delete(prescription);
-
         List<Prescription> prescriptions = LiveDataTestUtil.getValue(prescriptionDAO.getAllPrescriptions());
         assertFalse(prescriptions.contains(prescription));
     }
