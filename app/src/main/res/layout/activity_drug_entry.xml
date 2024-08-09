@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="Add Drug" />
+        android:text="@string/add_drug" />
 
 </LinearLayout>
