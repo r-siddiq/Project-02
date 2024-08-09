@@ -3,15 +3,10 @@ package com.example.project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import com.example.project02.Database.PharmacyRepository;
-import com.example.project02.Database.entities.Drug;
 import com.example.project02.databinding.ActivityInventoryBinding;
 
 public class InventoryActivity extends AppCompatActivity {
@@ -30,63 +25,34 @@ public class InventoryActivity extends AppCompatActivity {
         //loginUser(savedInstanceState);
         invalidateOptionsMenu();
 
-
-
-
-/*        EditText drugNameEditText = findViewById(R.id.drugNameEditText);
-        Button addDrugButton = findViewById(R.id.addDrugButton);
-
-        addDrugButton.setOnClickListener(v -> {
-            String drugName = drugNameEditText.getText().toString().trim();
-
-            if (drugName.isEmpty()) {
-                Toast.makeText(this, "Please enter a drug name.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Drug newDrug = new Drug(drugName);
-            repository.insertDrug(newDrug);
-
-            Toast.makeText(this, "Drug added to inventory!", Toast.LENGTH_SHORT).show();
-
-            drugNameEditText.setText("");
+        // Check Inventory button click listener
+        binding.checkInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InventoryActivity.this, CheckInventoryActivity.class);
+                startActivity(intent);            }
         });
 
-        Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            finish();
-        });*/
+        // Add Inventory button click listener
+        binding.addInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class); startActivity(intent);            }
+        });
+
+        // Remove Inventory button click listener
+        binding.removeInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Implement logic to remove inventory items or remove option
+            }
+        });
     }
+
     public static Intent inventoryIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, InventoryActivity.class);
         intent.putExtra(INVENTORY_ACTIVITY_USER_ID, userId);
         return intent;
     }
-
-
-
 }
 
-
-
-
-
-//        Button checkInventoryButton = findViewById(R.id.checkInventory);
-//        checkInventoryButton.setOnClickListener(v -> {
-////            Intent intent = new Intent(InventoryActivity.this, CheckInventoryActivity.class);
-////            startActivity(intent);
-//        });
-//
-//        Button addInventoryButton = findViewById(R.id.addInventory);
-//        addInventoryButton.setOnClickListener(v -> {
-////            Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class);
-////            startActivity(intent);
-//        });
-//
-//        Button removeInventoryButton = findViewById(R.id.removeInventory);
-//        removeInventoryButton.setOnClickListener(v -> {
-////            Intent intent = new Intent(InventoryActivity.this, RemoveInventoryActivity.class);
-////            startActivity(intent);
-//        });
-//    }
-//}

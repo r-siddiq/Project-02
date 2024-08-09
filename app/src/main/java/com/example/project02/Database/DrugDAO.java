@@ -10,6 +10,8 @@ import androidx.room.Update;
 
 import com.example.project02.Database.entities.Drug;
 
+import java.util.List;
+
 @Dao
 public interface DrugDAO {
 
@@ -30,6 +32,9 @@ public interface DrugDAO {
 
     @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " WHERE id == :id")
     LiveData<Drug> getDrugById(int id);
+    //LiveData for CheckInventoryActivity
+    @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " ORDER BY name")
+    LiveData<List<Drug>> getAllDrugsList();
 
     @Update
     void update(Drug drug);
