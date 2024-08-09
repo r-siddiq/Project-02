@@ -82,7 +82,7 @@ public abstract class PharmacyDatabase extends RoomDatabase {
 
                 PrescriptionDAO prescriptiondao = INSTANCE.prescriptionDAO();
                 prescriptiondao.deleteAll();
-                Prescription defaultPrescription = new Prescription("Tylenol", 10, testUser1.getId(), 2);
+                Prescription defaultPrescription = new Prescription("Tylenol", 10, testUser1.getUsername(), 2);
                 prescriptiondao.insert(defaultPrescription);
                 Log.i(MainActivity.TAG, "Prescriptions added");
             });

@@ -16,7 +16,7 @@ public class Prescription {
     private int rxid;
     private String drugName;
     private int quantity;
-    private int patientId;
+    private String username;
     private int refills;
 
     /**
@@ -73,13 +73,13 @@ public class Prescription {
      * Constructs a new Prescription with the specified details.
      * @param drugName    the name of the drug prescribed
      * @param quantity    the quantity of the drug prescribed
-     * @param patientId   the ID of the patient receiving the prescription
+     * @param username   the ID of the patient receiving the prescription
      * @param refills     the number of refills available
      */
-    public Prescription(String drugName, int quantity, int patientId, int refills) {
+    public Prescription(String drugName, int quantity, String username, int refills) {
         this.drugName = drugName;
         this.quantity = quantity;
-        this.patientId = patientId;
+        this.username = username;
         this.refills = refills;
     }
 
@@ -107,12 +107,12 @@ public class Prescription {
         this.quantity = quantity;
     }
 
-    public int getPatientId() {
-        return patientId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getRefills() {
@@ -128,18 +128,18 @@ public class Prescription {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Prescription that = (Prescription) o;
-        return rxid == that.rxid && quantity == that.quantity && patientId == that.patientId && refills == that.refills && Objects.equals(drugName, that.drugName);
+        return rxid == that.rxid && quantity == that.quantity && refills == that.refills && Objects.equals(drugName, that.drugName) && Objects.equals(username, that.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rxid, drugName, quantity, patientId, refills);
+        return Objects.hash(rxid, drugName, quantity, username, refills);
     }
 
     @Override
     public String toString() {
-        return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", patientId="
-                + patientId +  ", refills=" + refills
+        return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", Patient Name="
+                + username +  ", refills=" + refills
                 + "]";
     }
 
