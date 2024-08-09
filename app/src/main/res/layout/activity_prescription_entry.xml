@@ -7,10 +7,11 @@
     tools:context=".PrescriptionEntryActivity">
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/prescrtionInformation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Information"
+        android:text="Prescription Information"
+        android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -20,48 +21,48 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Enter Name"
-        app:layout_constraintTop_toBottomOf="@id/userName"
+        app:layout_constraintTop_toBottomOf="@id/prescrtionInformation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.8" />
 
     <EditText
-        android:id="@+id/address"
+        android:id="@+id/drugName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Address"
+        android:hint="Enter Drug"
         app:layout_constraintTop_toBottomOf="@id/enterName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.8" />
 
     <EditText
-        android:id="@+id/birthdate"
+        android:id="@+id/drugQuantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Birthdate"
-        app:layout_constraintTop_toBottomOf="@id/address"
+        android:hint="Enter Quantity"
+        app:layout_constraintTop_toBottomOf="@id/drugName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.8" />
 
     <EditText
-        android:id="@+id/ssn"
+        android:id="@+id/drugRefills"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="SSN"
+        android:hint="Enter Number of Refills"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@id/birthdate"
+        app:layout_constraintTop_toBottomOf="@id/drugQuantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.8" />
 
     <Button
-        android:id="@+id/userLogin"
+        android:id="@+id/createPrescriptionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        app:layout_constraintTop_toBottomOf="@id/ssn"
+        android:text="Create Prescription"
+        app:layout_constraintTop_toBottomOf="@id/drugRefills"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
