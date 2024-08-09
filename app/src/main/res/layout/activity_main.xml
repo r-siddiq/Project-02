@@ -11,73 +11,55 @@
         android:id="@+id/welcomeUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Welcome User!"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/placeOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Place Order"
-        app:layout_constraintTop_toBottomOf="@id/welcomeUser"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8" />
-
-    <Button
-        android:id="@+id/orderStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order Status"
-        app:layout_constraintTop_toBottomOf="@id/placeOrder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/viewPrescriptionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="View Prescriptions"
-        app:layout_constraintTop_toBottomOf="@id/orderStatus"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/welcomeUser" />
 
     <TextView
         android:id="@+id/adminOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Admin Options"
         android:layout_marginTop="25dp"
+        android:text="Admin Options"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPrescriptionsButton"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewPrescriptionsButton" />
 
     <Button
         android:id="@+id/adminCenterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Admin Panel"
-        app:layout_constraintTop_toBottomOf="@id/adminOptions"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adminOptions" />
+
     <Button
         android:id="@+id/newPrescriptionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New prescription"
-        app:layout_constraintTop_toBottomOf="@id/adminCenterButton"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
-
-
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adminCenterButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
