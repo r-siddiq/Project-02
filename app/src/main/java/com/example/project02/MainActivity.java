@@ -85,14 +85,19 @@ public class MainActivity extends AppCompatActivity {
         loggedInUserID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
 
         if(loggedInUserID == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)){
-            loggedInUserID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY,LOGGED_OUT);
+            loggedInUserID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY, LOGGED_OUT);
         }
         if(loggedInUserID == LOGGED_OUT){
             loggedInUserID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
         }
+        if(loggedInUserID != LOGGED_OUT) {
+            updateSharedPreference();  // Save the logged in user ID to SharedPreferences
+        }
+
         if(loggedInUserID == LOGGED_OUT){
             return;
         }
+
         LiveData<User> userObserver = repository.getUsersByUserId(loggedInUserID);
         userObserver.observe(this, user -> {
             this.user = user;
@@ -103,10 +108,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void updateSharedPreference() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putInt(getString(R.string.preference_userId_key), loggedInUserID);
+        sharedPreferencesEditor.apply();
+    }
+
     private void logout() {
         loggedInUserID = LOGGED_OUT;
+        updateSharedPreference();  // Update SharedPreferences with LOGGED_OUT status
         getIntent().putExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SAVED_INSTANCE_STATE_USERID_KEY, loggedInUserID);
+        updateSharedPreference();
     }
 
     @Override
