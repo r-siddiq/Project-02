@@ -27,6 +27,7 @@ public class AddInventoryActivity extends AppCompatActivity {
 
         EditText drugNameEditText = binding.drugNameEditText; // Assuming you have this EditText in your layout
         Button addButton = binding.addDrugButton; // Assuming you have this Button in your layout
+        Button backButton = binding.backButton;
 
         addButton.setOnClickListener(v -> {
             String drugName = drugNameEditText.getText().toString().trim();
@@ -45,6 +46,10 @@ public class AddInventoryActivity extends AppCompatActivity {
 
             //clear editText
             drugNameEditText.setText("");
+        });
+        backButton.setOnClickListener(v -> {
+            // Close the current activity and go back to the previous one
+            finish();
         });
     }
 }

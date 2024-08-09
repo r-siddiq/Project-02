@@ -34,11 +34,11 @@ public class InventoryActivity extends AppCompatActivity {
         });
 
         // Add Inventory button click listener
-        binding.addInventory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class); startActivity(intent);            }
+        binding.addInventory.setOnClickListener(v -> {
+            Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class);
+            startActivity(intent);
         });
+
 
         // Remove Inventory button click listener
         binding.removeInventory.setOnClickListener(new View.OnClickListener() {
