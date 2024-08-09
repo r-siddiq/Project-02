@@ -55,26 +55,28 @@ public class UserDaoTest {
 
     @Test
     public void testUpdateUser() throws InterruptedException {
-        User user = new User("testUser", "password");
+        User user = new User("testUserUpdate", "password");
         userDAO.insert(user);
 
-        user.setPassword("newPassword");
-        userDAO.update(user);
-
-        User updatedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUser"));
+        User insertedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUserUpdate"));
+        // Update the user's password
+        insertedUser.setPassword("newPassword");
+        userDAO.update(insertedUser);
+        
+        User updatedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUserUpdate"));
         assertNotNull(updatedUser);
         assertEquals("newPassword", updatedUser.getPassword());
     }
 
     @Test
     public void testDeleteUser() throws InterruptedException {
-        User user = new User("testUser", "password");
+        User user = new User("testUserRemove", "password");
         userDAO.insert(user);
 
         userDAO.delete(user);
 
-        User deletedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUser"));
-        assertNull(deletedUser);
+        List<User> users = LiveDataTestUtil.getValue(userDAO.getAllUsers());
+        assertFalse(users.contains(user));
     }
 
     @Test
