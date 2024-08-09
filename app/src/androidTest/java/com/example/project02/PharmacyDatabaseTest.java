@@ -68,11 +68,13 @@ public class PharmacyDatabaseTest {
         User user = new User("testUserUpdate", "password");
         userDAO.insert(user);
 
+        User insertedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUserUpdate"));
         // Update the user's password
-        user.setPassword("newpassword");
-        userDAO.update(user);
-        assertNotNull(user);
-        assertEquals("newpassword", user.getPassword());
+        insertedUser.setPassword("newpassword");
+        userDAO.update(insertedUser);
+        User updatedUser = LiveDataTestUtil.getValue(userDAO.getUserByUsername("testUserUpdate"));
+        assertNotNull(updatedUser);
+        assertEquals("newpassword", updatedUser.getPassword());
     }
 
     @Test
@@ -103,9 +105,10 @@ public class PharmacyDatabaseTest {
         Drug drug = new Drug("Citalopram");
         drugDAO.insert(drug);
 
+        Drug insertedDrug = LiveDataTestUtil.getValue(drugDAO.getDrugByName("Citalopram"));
         // Update the drug name
-        drug.setName("Ibuprofen");
-        drugDAO.update(drug);
+        insertedDrug.setName("Ibuprofen");
+        drugDAO.update(insertedDrug);
 
         Drug updatedDrug = LiveDataTestUtil.getValue(drugDAO.getDrugByName("Ibuprofen"));
         assertNotNull(updatedDrug);
@@ -114,13 +117,13 @@ public class PharmacyDatabaseTest {
 
     @Test
     public void deleteDrug() throws InterruptedException {
-        Drug drug = new Drug("Aspirin");
+        Drug drug = new Drug("Baclofen");
         drugDAO.insert(drug);
 
         drugDAO.delete(drug);
 
-        Drug deletedDrug = LiveDataTestUtil.getValue(drugDAO.getDrugByName("Aspirin"));
-        assertNull(deletedDrug);
+        List<Drug> drugs= LiveDataTestUtil.getValue(drugDAO.getAllDrugs());
+        assertFalse(drugs.contains(drug));
     }
 
     // PrescriptionDAO Tests
@@ -138,14 +141,20 @@ public class PharmacyDatabaseTest {
 
     @Test
     public void updatePrescription() throws InterruptedException {
-        Prescription prescription = new Prescription("Ibuprofen", 5, "testuser", 1);
+        Prescription prescription = new Prescription("Trazodone", 5, "testuser", 1);
         prescriptionDAO.insert(prescription);
 
         // Update the prescription quantity
-        prescription.setQuantity(10);
-        prescriptionDAO.update(prescription);
 
-        Prescription updatedPrescription = LiveDataTestUtil.getValue(prescriptionDAO.getPrescriptionByDrugName("Ibuprofen"));
+        Prescription insertedPrescription = LiveDataTestUtil.getValue(prescriptionDAO.getPrescriptionByDrugName("Trazodone"));
+        assertNotNull(insertedPrescription);
+
+        // Update the prescription quantity
+        insertedPrescription.setQuantity(10);
+        prescriptionDAO.update(insertedPrescription);
+
+
+        Prescription updatedPrescription = LiveDataTestUtil.getValue(prescriptionDAO.getPrescriptionByDrugName("Trazodone"));
         assertNotNull(updatedPrescription);
         assertEquals(10, updatedPrescription.getQuantity());
     }
