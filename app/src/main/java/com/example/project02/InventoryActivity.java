@@ -1,45 +1,61 @@
 package com.example.project02;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.example.project02.R;
+import com.example.project02.Database.PharmacyRepository;
+import com.example.project02.databinding.ActivityInventoryBinding;
 
 public class InventoryActivity extends AppCompatActivity {
+    public static final String INVENTORY_ACTIVITY_USER_ID = "com.example.project02.INVENTORY_ACTIVITY_USER_ID";
+
+
+    private ActivityInventoryBinding binding;
+    private PharmacyRepository repository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_inventory);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.inventoryLabel), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        binding = ActivityInventoryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        repository = PharmacyRepository.getRepository(getApplication());
+        //loginUser(savedInstanceState);
+        invalidateOptionsMenu();
+
+        // Check Inventory button click listener
+        binding.checkInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InventoryActivity.this, CheckInventoryActivity.class);
+                startActivity(intent);            }
         });
 
-        Button checkInventoryButton = findViewById(R.id.checkInventory);
-        checkInventoryButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(InventoryActivity.this, CheckInventoryActivity.class);
-//            startActivity(intent);
+        // Add Inventory button click listener
+        binding.addInventory.setOnClickListener(v -> {
+            Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class);
+            startActivity(intent);
         });
 
-        Button addInventoryButton = findViewById(R.id.addInventory);
-        addInventoryButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(InventoryActivity.this, AddInventoryActivity.class);
-//            startActivity(intent);
-        });
 
-        Button removeInventoryButton = findViewById(R.id.removeInventory);
-        removeInventoryButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(InventoryActivity.this, RemoveInventoryActivity.class);
-//            startActivity(intent);
+        // Remove Inventory button click listener
+//        binding.removeInventory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO: Implement logic to remove inventory items or remove option
+//            }
+//        });
+        binding.backButton.setOnClickListener(v -> {
+            onBackPressed();
         });
     }
+
+    public static Intent inventoryIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, InventoryActivity.class);
+        intent.putExtra(INVENTORY_ACTIVITY_USER_ID, userId);
+        return intent;
+    }
 }
+

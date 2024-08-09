@@ -28,6 +28,15 @@
             android:name=".PrescriptionEntryActivity"
             android:exported="false" />
         <activity
+            android:name=".InventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddInventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckInventoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
