@@ -25,7 +25,7 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     @Override
     public PrescriptionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_user_prescription, parent, false); // Use item_prescription layout
+                .inflate(R.layout.activity_user_prescription, parent, false);  // Updated to use item_prescription layout
         return new PrescriptionViewHolder(view);
     }
 
@@ -48,6 +48,11 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
         return prescriptionList.size();
     }
 
+    public void updateData(List<Prescription> newPrescriptionList) {
+        this.prescriptionList = newPrescriptionList;
+        notifyDataSetChanged();
+    }
+
     static class PrescriptionViewHolder extends RecyclerView.ViewHolder {
 
         TextView prescriptionName;
@@ -55,8 +60,8 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
 
         public PrescriptionViewHolder(@NonNull View itemView) {
             super(itemView);
-            prescriptionName = itemView.findViewById(R.id.drugName); // Assuming you have this ID in item_prescription.xml
-            prescriptionDetails = itemView.findViewById(R.id.prescriptionDetails); // Assuming you have this ID in item_prescription.xml
+            prescriptionName = itemView.findViewById(R.id.drugName);
+            prescriptionDetails = itemView.findViewById(R.id.prescriptionsTitle);
         }
     }
 }

@@ -62,9 +62,7 @@ public class UserPrescriptionActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView_prescriptions);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Assuming you have a method to get the prescriptions
-        pharmacyRepository.getAllPrescriptions().observe(this, new Observer<List<Prescription>>() {
-            @Override
+        pharmacyRepository.getAllPrescriptions().observe(this, new Observer<List<Prescription>>() {            @Override
             public void onChanged(List<Prescription> prescriptionList) {
                 // This method is called whenever the data is updated
                 adapter = new PrescriptionAdapter(prescriptionList);
@@ -81,7 +79,6 @@ public class UserPrescriptionActivity extends AppCompatActivity {
     }
 
     private void loginUser(Bundle savedInstanceState) {
-        //Check shared preference for logged in user
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         loggedInUserID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
 
