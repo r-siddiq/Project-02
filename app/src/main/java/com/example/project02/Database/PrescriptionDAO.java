@@ -32,5 +32,5 @@ public interface PrescriptionDAO {
     void delete(Prescription prescription);
 
     @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE + " WHERE drugName = :drugName")
-    LiveData<Prescription> getPrescriptionByDrugName(String trazodone);
+    LiveData<Prescription> getPrescriptionByDrugName(String drugName);
 }
