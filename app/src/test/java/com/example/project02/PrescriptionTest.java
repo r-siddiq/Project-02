@@ -50,8 +50,7 @@ public class PrescriptionTest {
     @Test
     public void testToString() {
         // Set up the expected string according to the new format
-        String expectedString = "Prescription for Aspirin:\n" +
-                "Quantity: 30, Refills: 2";
+        String expectedString = "Prescription for Aspirin:\n" + "Quantity: 30, Refills: 2";
 
         // Assert that the actual toString output matches the expected string
         assertEquals(expectedString, prescription1.toString());
