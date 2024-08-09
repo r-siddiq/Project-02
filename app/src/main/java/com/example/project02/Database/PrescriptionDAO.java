@@ -1,12 +1,10 @@
 package com.example.project02.Database;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.project02.Database.entities.Drug;
 import com.example.project02.Database.entities.Prescription;
 
 import java.util.List;
