@@ -3,6 +3,7 @@ package com.example.project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,5 +38,12 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
         repository = PharmacyRepository.getRepository(getApplication());
         //loginUser(savedInstanceState);
         invalidateOptionsMenu();
+
+        binding.prescriptionBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), loggedInUserID));
+            }
+        });
     }
 }
