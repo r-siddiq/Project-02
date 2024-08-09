@@ -17,9 +17,7 @@ public class Prescription {
     private String drugName;
     private int quantity;
     private int patientId;
-    private String dateCreated;
     private int refills;
-    private List<FillRequest> fills = new ArrayList<>();
 
     /**
      * Represents a fill request for a prescription.
@@ -76,22 +74,14 @@ public class Prescription {
      * @param drugName    the name of the drug prescribed
      * @param quantity    the quantity of the drug prescribed
      * @param patientId   the ID of the patient receiving the prescription
-     * @param dateCreated the date the prescription was created
      * @param refills     the number of refills available
-     * @param fills       the list of fill requests for this prescription
      */
-    public Prescription(String drugName, int quantity, int patientId, String dateCreated, int refills, List<FillRequest> fills) {
+    public Prescription(int rxid, String drugName, int quantity, int patientId, int refills) {
+        this.rxid = rxid;
         this.drugName = drugName;
         this.quantity = quantity;
         this.patientId = patientId;
-        this.dateCreated = dateCreated;
         this.refills = refills;
-        this.fills = fills;
-    }
-
-    public Prescription() {
-        this.dateCreated = getCurrentDate();
-        this.fills = new ArrayList<>();
     }
 
     public int getRxid() {
@@ -126,14 +116,6 @@ public class Prescription {
         this.patientId = patientId;
     }
 
-    public String getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public int getRefills() {
         return refills;
     }
@@ -142,38 +124,24 @@ public class Prescription {
         this.refills = refills;
     }
 
-    public List<FillRequest> getFills() {
-        return fills;
-    }
-
-    public void setFills(List<FillRequest> fills) {
-        this.fills = fills;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Prescription that = (Prescription) o;
-        return rxid == that.rxid &&
-                quantity == that.quantity &&
-                patientId == that.patientId &&
-                refills == that.refills &&
-                Objects.equals(drugName, that.drugName) &&
-                Objects.equals(dateCreated, that.dateCreated) &&
-                Objects.equals(fills, that.fills);
+        return rxid == that.rxid && quantity == that.quantity && patientId == that.patientId && refills == that.refills && Objects.equals(drugName, that.drugName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rxid, drugName, quantity, patientId, dateCreated, refills, fills);
+        return Objects.hash(rxid, drugName, quantity, patientId, refills);
     }
 
     @Override
     public String toString() {
         return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", patientId="
-                + patientId + ", dateCreated=" + dateCreated + ", refills=" + refills
-                + ", fills=" + fills + "]";
+                + patientId +  ", refills=" + refills
+                + "]";
     }
 
     /**
