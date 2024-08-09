@@ -1,5 +1,6 @@
 package com.example.project02.Database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -20,5 +21,5 @@ public interface PrescriptionDAO {
     void insert(Prescription prescription);
 
     @Query("SELECT * FROM " + PharmacyDatabase.PRESCRIPTION_TABLE )
-    List<Prescription> getAllRecords();
+    LiveData<List<Prescription>> getAllPrescriptions();
 }

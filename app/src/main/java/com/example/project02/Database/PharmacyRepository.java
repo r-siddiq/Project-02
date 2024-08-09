@@ -160,4 +160,8 @@ public class PharmacyRepository {
             prescriptionDAO.insert(prescription);
         });
     }
+
+    public LiveData<List<Prescription>> getAllPrescriptions() {
+        return prescriptionDAO.getAllPrescriptions();
+    }
 }
