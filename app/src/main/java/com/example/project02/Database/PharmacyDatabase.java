@@ -11,18 +11,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.entities.User;
 import com.example.project02.Database.entities.Prescription;
-import com.example.project02.Database.entities.Pharmacy;
 import com.example.project02.Database.entities.Drug;
 import com.example.project02.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Pharmacy.class, Prescription.class, Drug.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Prescription.class, Drug.class}, version = 1, exportSchema = false)
 public abstract class PharmacyDatabase extends RoomDatabase {
 
     public static final String DRUG_TABLE = "drug_table";
-    public static final String PHARMACY_TABLE = "pharmacy_table";
     public static final String USER_TABLE = "user_table";
     public static final String PRESCRIPTION_TABLE = "prescription_table";
     private static final String DATABASE_NAME = "pharmacy_database";
@@ -91,7 +89,6 @@ public abstract class PharmacyDatabase extends RoomDatabase {
 
     // Abstract methods to provide DAO instances
     public abstract DrugDAO drugDAO();
-    public abstract PharmacyDAO pharmacyDAO();
     public abstract PrescriptionDAO prescriptionDAO();
     public abstract UserDAO userDAO();
 }

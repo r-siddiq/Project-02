@@ -2,15 +2,10 @@ package com.example.project02.Database.typeConverters;
 
 import androidx.room.TypeConverter;
 
-import com.example.project02.Database.entities.Pharmacy;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 public class LocalDateTypeConverter {
     @TypeConverter
