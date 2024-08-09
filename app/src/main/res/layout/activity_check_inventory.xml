@@ -19,6 +19,7 @@
     <TextView
         android:id="@+id/inventoryTextView"
         android:layout_width="match_parent"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/inventoryTitle"
         app:layout_constraintStart_toStartOf="parent"
