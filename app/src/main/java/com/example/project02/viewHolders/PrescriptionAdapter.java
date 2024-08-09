@@ -25,7 +25,7 @@ public class PrescriptionAdapter extends ListAdapter<Prescription, PrescriptionV
         holder.bind(current.toString());
     }
 
-    public static class GymLogDiff extends DiffUtil.ItemCallback<Prescription>{
+    public static class PrescriptionDiff extends DiffUtil.ItemCallback<Prescription>{
         @Override
         public boolean areItemsTheSame(@NonNull Prescription oldItem, @NonNull Prescription newItem) {
             return oldItem == newItem;

@@ -14,18 +14,15 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project02.Database.PharmacyRepository;
-import com.example.project02.Database.PrescriptionDAO;
-import com.example.project02.Database.entities.Prescription;
 import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityUserPrescriptionBinding;
 import com.example.project02.viewHolders.PrescriptionAdapter;
-
-import java.util.List;
+import com.example.project02.viewHolders.PrescriptionViewModel;
 
 public class UserPrescriptionActivity extends AppCompatActivity {
 
@@ -38,6 +35,7 @@ public class UserPrescriptionActivity extends AppCompatActivity {
     private PrescriptionAdapter adapter;
 
     private PharmacyRepository repository;
+    private PrescriptionViewModel prescriptionViewModel;
 
 
     int loggedInUserID = LOGGED_OUT;
@@ -54,6 +52,14 @@ public class UserPrescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserPrescriptionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        prescriptionViewModel = new ViewModelProvider(this).get(PrescriptionViewModel.class);
+
+        RecyclerView recyclerView = binding.recyclerViewPrescriptions;
+        final PrescriptionAdapter adapter = new PrescriptionAdapter(new PrescriptionAdapter.PrescriptionDiff());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         repository = PharmacyRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
