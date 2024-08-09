@@ -49,7 +49,11 @@ public class PrescriptionTest {
 
     @Test
     public void testToString() {
-        String expectedString = "PrescriptionData [rxid=0, drugName=Aspirin, quantity=30, Patient Name=john_doe, refills=2]";
+        // Set up the expected string according to the new format
+        String expectedString = "Prescription for Aspirin:\n" +
+                "Quantity: 30, Refills: 2";
+
+        // Assert that the actual toString output matches the expected string
         assertEquals(expectedString, prescription1.toString());
     }
 }
