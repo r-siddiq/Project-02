@@ -175,8 +175,16 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
             if (drug == null) {
                 toastMaker(String.format("%s is not in inventory.", drugName));
             } else {
-                // Proceed with inserting the prescription or other actions
-                insertNewPrescription(finalDrugQuantity, finalDrugRefills);
+                // Check if the username exists in the database
+                LiveData<User> userLiveData = repository.getUserByUsername(username);
+                userLiveData.observe(this, user -> {
+                    if (user == null) {
+                        toastMaker(String.format("User %s does not exist.", username));
+                    } else {
+                        // Proceed with inserting the prescription or other actions
+                        insertNewPrescription(finalDrugQuantity, finalDrugRefills);
+                    }
+                });
             }
         });
     }
