@@ -76,8 +76,7 @@ public class Prescription {
      * @param patientId   the ID of the patient receiving the prescription
      * @param refills     the number of refills available
      */
-    public Prescription(int rxid, String drugName, int quantity, int patientId, int refills) {
-        this.rxid = rxid;
+    public Prescription(String drugName, int quantity, int patientId, int refills) {
         this.drugName = drugName;
         this.quantity = quantity;
         this.patientId = patientId;

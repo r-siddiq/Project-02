@@ -159,4 +159,9 @@ public class PharmacyRepository {
         PharmacyDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
     }
 
+    public void insertPrescription(Prescription prescription) {
+        PharmacyDatabase.databaseWriteExecutor.execute(() -> {
+            prescriptionDAO.insert(prescription);
+        });
+    }
 }

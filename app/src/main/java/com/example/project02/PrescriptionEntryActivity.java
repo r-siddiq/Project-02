@@ -10,12 +10,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.project02.Database.PharmacyRepository;
+import com.example.project02.Database.entities.Drug;
+import com.example.project02.Database.entities.Prescription;
 import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityPrescriptionEntryBinding;
 
@@ -31,6 +34,9 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
     int loggedInUserID = LOGGED_OUT;
     private User user;
 
+    private String username;
+    private String drugName;;
+
     public static Intent prescriptionEntryIntentFactory(Context applicationContext, int userID) {
         Intent intent = new Intent(applicationContext, PrescriptionEntryActivity.class);
         intent.putExtra(PENTRY_ACTIVITY_USER_ID, userID);
@@ -45,6 +51,13 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
         repository = PharmacyRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
+
+        binding.createPrescriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getInformationFromDisplay();
+            }
+        });
 
         binding.prescriptionBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,4 +142,53 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
         getIntent().putExtra(PENTRY_ACTIVITY_USER_ID, LOGGED_OUT);
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
     }
+
+    private void getInformationFromDisplay() {
+        username = binding.prescrtionInformation.getText().toString();
+        drugName = binding.drugName.getText().toString();
+
+        String quantityString = binding.drugQuantity.getText().toString();
+        String refillsString = binding.drugRefills.getText().toString();
+
+        int drugQuantity = 0;
+        int drugRefills = 0;
+
+        try {
+            drugQuantity = Integer.parseInt(quantityString);
+        } catch (NumberFormatException e) {
+            toastMaker("Invalid quantity format.");
+            return;
+        }
+
+        try {
+            drugRefills = Integer.parseInt(refillsString);
+        } catch (NumberFormatException e) {
+            toastMaker("Invalid refills format.");
+            return;
+        }
+
+        // Check if the drug name exists in the database
+        LiveData<Drug> drugLiveData = repository.getDrugByName(drugName);
+        int finalDrugQuantity = drugQuantity;
+        int finalDrugRefills = drugRefills;
+        drugLiveData.observe(this, drug -> {
+            if (drug == null) {
+                toastMaker(String.format("%s is not in inventory.", drugName));
+            } else {
+                // Proceed with inserting the prescription or other actions
+                insertNewPrescription(finalDrugQuantity, finalDrugRefills);
+            }
+        });
+    }
+
+    private void insertNewPrescription(int quantity, int refills) {
+        // Assuming you have a method to insert a new prescription
+        Prescription prescription = new Prescription(drugName, quantity, loggedInUserID, refills);
+        repository.insertPrescription(prescription);
+        toastMaker("Prescription added successfully.");
+    }
+
+        private void toastMaker(String message) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
 }
