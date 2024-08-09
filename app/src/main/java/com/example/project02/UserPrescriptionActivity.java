@@ -14,10 +14,18 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project02.Database.PharmacyRepository;
+import com.example.project02.Database.PrescriptionDAO;
+import com.example.project02.Database.entities.Prescription;
 import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityUserPrescriptionBinding;
+import com.example.project02.viewHolders.PrescriptionAdapter;
+
+import java.util.List;
 
 public class UserPrescriptionActivity extends AppCompatActivity {
 
@@ -25,6 +33,9 @@ public class UserPrescriptionActivity extends AppCompatActivity {
     private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";
     private static final int LOGGED_OUT = -1;
     private ActivityUserPrescriptionBinding binding;
+    private PharmacyRepository pharmacyRepository;
+    private RecyclerView recyclerView;
+    private PrescriptionAdapter adapter;
 
     private PharmacyRepository repository;
 
@@ -46,6 +57,20 @@ public class UserPrescriptionActivity extends AppCompatActivity {
         repository = PharmacyRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
+
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView_prescriptions);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Assuming you have a method to get the prescriptions
+        pharmacyRepository.getAllPrescriptions().observe(this, new Observer<List<Prescription>>() {
+            @Override
+            public void onChanged(List<Prescription> prescriptionList) {
+                // This method is called whenever the data is updated
+                adapter = new PrescriptionAdapter(prescriptionList);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
