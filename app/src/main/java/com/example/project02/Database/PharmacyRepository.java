@@ -25,6 +25,11 @@ public class PharmacyRepository {
     private ArrayList<Pharmacy> pLogs;
     private static PharmacyRepository repository;
 
+
+    public LiveData<List<Drug>> getAllDrugsList() {
+        return drugDAO.getAllDrugsList();
+    }
+
     /**
      * Private constructor for PharmacyRepository.
      * Initializes DAO interfaces and retrieves all records from the database.
