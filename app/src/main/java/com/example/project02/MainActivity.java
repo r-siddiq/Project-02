@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPrescriptionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = AdminActionActivity.adminActionIntentFactory(getApplicationContext(),loggedInUserID);
                 Intent intent = UserPrescriptionActivity.prescriptionActivityIntentFactory(getApplicationContext(), loggedInUserID);
                 startActivity(intent);
             }
@@ -133,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isAdmin = user != null && user.isAdmin();
         binding.adminOptions.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
         binding.adminCenterButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        binding.newPrescriptionButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
     }
 
     private void showLogoutDialog(){

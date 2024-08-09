@@ -66,6 +66,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
+    <Button
+        android:id="@+id/newPrescriptionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New prescription"
+        app:layout_constraintTop_toBottomOf="@id/adminCenterButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
+
 
 
 
