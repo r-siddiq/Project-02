@@ -19,7 +19,7 @@ public class PrescriptionViewModel extends AndroidViewModel {
         repository = PharmacyRepository.getRepository(application);
     }
 
-    public LiveData<List<Prescription>> get(String username) {
+    public LiveData<List<Prescription>> getAllLogsByUsername(String username) {
         return repository.getAllLogsByUserIdLiveData(username);
     }
 

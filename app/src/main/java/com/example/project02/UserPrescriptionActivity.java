@@ -62,7 +62,16 @@ public class UserPrescriptionActivity extends AppCompatActivity {
 
         repository = PharmacyRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
-        invalidateOptionsMenu();
+
+        repository.getUsersByUserId(loggedInUserID).observe(this, user -> {
+            if (user != null) {
+                this.user = user;
+                String username = user.getUsername();
+                prescriptionViewModel.getAllLogsByUsername(username).observe(this, prescriptions -> {
+                    adapter.submitList(prescriptions);
+                });
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override

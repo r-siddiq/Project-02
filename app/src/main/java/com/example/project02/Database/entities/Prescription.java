@@ -139,9 +139,7 @@ public class Prescription {
 
     @Override
     public String toString() {
-        return "PrescriptionData [rxid=" + rxid + ", drugName=" + drugName + ", quantity=" + quantity + ", Patient Name="
-                + username +  ", refills=" + refills
-                + "]";
+        return "Prescription for " + drugName +":\n" + "Quanitity: " + quantity + ", Refills: " +refills;
     }
 
     /**
