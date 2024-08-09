@@ -169,4 +169,15 @@ public class PharmacyRepository {
     public LiveData<List<Prescription>> getAllPrescriptions() {
         return prescriptionDAO.getAllPrescriptions();
     }
+
+    /**
+     * Retrieves all gym logs for a specific user as LiveData.
+     *
+     * @param username the username of the user
+     * @return LiveData containing a list of gym logs for the user
+     */
+    public LiveData<List<Prescription>> getAllLogsByUserIdLiveData(String username) {
+        return prescriptionDAO.getAllRecordsByUsernameLiveData(username);
+    }
+
 }

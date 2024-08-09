@@ -58,18 +58,6 @@ public class UserPrescriptionActivity extends AppCompatActivity {
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
 
-        // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recyclerView_prescriptions);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        pharmacyRepository.getAllPrescriptions().observe(this, new Observer<List<Prescription>>() {            @Override
-            public void onChanged(List<Prescription> prescriptionList) {
-                // This method is called whenever the data is updated
-                adapter = new PrescriptionAdapter(prescriptionList);
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
