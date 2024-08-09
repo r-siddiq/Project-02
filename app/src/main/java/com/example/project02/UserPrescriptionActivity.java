@@ -14,10 +14,15 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.User;
 import com.example.project02.databinding.ActivityUserPrescriptionBinding;
+import com.example.project02.viewHolders.PrescriptionAdapter;
+import com.example.project02.viewHolders.PrescriptionViewModel;
 
 public class UserPrescriptionActivity extends AppCompatActivity {
 
@@ -25,8 +30,12 @@ public class UserPrescriptionActivity extends AppCompatActivity {
     private static final String SAVED_INSTANCE_STATE_USERID_KEY ="com.example.project02.SAVED_INSTANCE_STATE_USERID_KEY";
     private static final int LOGGED_OUT = -1;
     private ActivityUserPrescriptionBinding binding;
+    private PharmacyRepository pharmacyRepository;
+    private RecyclerView recyclerView;
+    private PrescriptionAdapter adapter;
 
     private PharmacyRepository repository;
+    private PrescriptionViewModel prescriptionViewModel;
 
 
     int loggedInUserID = LOGGED_OUT;
@@ -43,9 +52,26 @@ public class UserPrescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserPrescriptionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        prescriptionViewModel = new ViewModelProvider(this).get(PrescriptionViewModel.class);
+
+        RecyclerView recyclerView = binding.recyclerViewPrescriptions;
+        final PrescriptionAdapter adapter = new PrescriptionAdapter(new PrescriptionAdapter.PrescriptionDiff());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         repository = PharmacyRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
-        invalidateOptionsMenu();
+
+        repository.getUsersByUserId(loggedInUserID).observe(this, user -> {
+            if (user != null) {
+                this.user = user;
+                String username = user.getUsername();
+                prescriptionViewModel.getAllLogsByUsername(username).observe(this, prescriptions -> {
+                    adapter.submitList(prescriptions);
+                });
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +82,6 @@ public class UserPrescriptionActivity extends AppCompatActivity {
     }
 
     private void loginUser(Bundle savedInstanceState) {
-        //Check shared preference for logged in user
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         loggedInUserID = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
 

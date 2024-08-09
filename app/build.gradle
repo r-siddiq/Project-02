@@ -45,6 +45,7 @@ dependencies {
 
     //Room
     implementation "androidx.room:room-runtime:2.6.1"
+    implementation libs.espresso.intents
     annotationProcessor "androidx.room:room-compiler:2.6.1"
 
     //Unit Testing

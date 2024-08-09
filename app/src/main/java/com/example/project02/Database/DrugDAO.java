@@ -22,7 +22,7 @@ public interface DrugDAO {
     void delete(Drug drug);
 
     @Query("SELECT * FROM " + PharmacyDatabase.DRUG_TABLE + " ORDER BY name")
-    LiveData<Drug> getAllDrugs();
+    LiveData<List<Drug>> getAllDrugs();
 
     @Query("DELETE FROM " + PharmacyDatabase.DRUG_TABLE)
     void deleteAll();

@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:targetApi="31">
+
         <activity
             android:name=".UserPrescriptionActivity"
             android:exported="false" />
@@ -25,9 +26,6 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".PrescriptionEntryActivity"
-            android:exported="false" />
-        <activity
             android:name=".InventoryActivity"
             android:exported="false" />
         <activity
@@ -36,15 +34,18 @@
         <activity
             android:name=".CheckInventoryActivity"
             android:exported="false" />
+       <activity
+            android:name=".PrescriptionEntryActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

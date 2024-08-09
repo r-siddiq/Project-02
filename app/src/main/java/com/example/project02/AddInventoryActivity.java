@@ -11,11 +11,29 @@ import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.Drug;
 import com.example.project02.databinding.ActivityAddInventoryBinding;
 
+/**
+ * Activity to add a new drug to the inventory.
+ * Provides an interface for the user to input the drug's name and add it to the inventory.
+ * Also includes a back button to return to the previous screen.
+ *
+ * The activity uses {@link ActivityAddInventoryBinding} for view binding and {@link PharmacyRepository}
+ * for data operations. It handles user input, performs validation, and updates the inventory database.
+ *
+ * @author Saria Kabbour
+ * @since 2024-08-08
+ */
 public class AddInventoryActivity extends AppCompatActivity {
 
     private ActivityAddInventoryBinding binding;
     private PharmacyRepository repository;
 
+    /**
+     * Called when the activity is first created.
+     * Initializes the layout, sets up the repository, and configures the UI elements.
+     * Sets up click listeners for the add and back buttons.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in {@link #onSaveInstanceState}. Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +62,10 @@ public class AddInventoryActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Drug added to inventory!", Toast.LENGTH_SHORT).show();
 
-            //clear editText
+            // Clear EditText
             drugNameEditText.setText("");
         });
+
         backButton.setOnClickListener(v -> {
             // Close the current activity and go back to the previous one
             finish();

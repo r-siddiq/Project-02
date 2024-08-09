@@ -106,7 +106,7 @@ public class PharmacyRepository {
      * Retrieves all Drug records from the database.
      * @return a LiveData list of all Drug records
      */
-    public LiveData<Drug> getAllDrugs() {
+    public LiveData<List<Drug>> getAllDrugs() {
         return drugDAO.getAllDrugs();
     }
 
@@ -165,4 +165,19 @@ public class PharmacyRepository {
             prescriptionDAO.insert(prescription);
         });
     }
+
+    public LiveData<List<Prescription>> getAllPrescriptions() {
+        return prescriptionDAO.getAllPrescriptions();
+    }
+
+    /**
+     * Retrieves all gym logs for a specific user as LiveData.
+     *
+     * @param username the username of the user
+     * @return LiveData containing a list of gym logs for the user
+     */
+    public LiveData<List<Prescription>> getAllLogsByUserIdLiveData(String username) {
+        return prescriptionDAO.getAllRecordsByUsernameLiveData(username);
+    }
+
 }
