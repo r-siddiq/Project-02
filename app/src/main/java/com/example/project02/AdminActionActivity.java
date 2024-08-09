@@ -43,6 +43,13 @@ public class AdminActionActivity extends AppCompatActivity {
         loginUser(savedInstanceState);
         invalidateOptionsMenu();
 
+        //TODO: button wont work as needed
+        binding.InventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(InventoryActivity.inventoryIntentFactory(getApplicationContext(), loggedInUserID));
+            }
+        });
 
         binding.deleteUsersButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -294,5 +301,10 @@ public class AdminActionActivity extends AppCompatActivity {
         loggedInUserID = LOGGED_OUT;
         getIntent().putExtra(ADMIN_ACTIVITY_USER_ID, LOGGED_OUT);
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
+    //TODO: button wont work as needed
+    private void goToInventory() {
+        startActivity(InventoryActivity.inventoryIntentFactory(getApplicationContext(), loggedInUserID));
     }
 }
