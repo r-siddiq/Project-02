@@ -20,9 +20,7 @@ public class PharmacyRepository {
 
     private final DrugDAO drugDAO;
     private final UserDAO userDAO;
-    private final PharmacyDAO pharmacyDAO;
     private final PrescriptionDAO prescriptionDAO;
-    private ArrayList<Pharmacy> pLogs;
     private static PharmacyRepository repository;
 
     /**
@@ -34,9 +32,7 @@ public class PharmacyRepository {
         PharmacyDatabase db = PharmacyDatabase.getDatabase(application);
         this.drugDAO = db.drugDAO();
         this.userDAO = db.userDAO();
-        this.pharmacyDAO = db.pharmacyDAO();
         this.prescriptionDAO = db.prescriptionDAO();
-        this.pLogs = (ArrayList<Pharmacy>) this.pharmacyDAO.getAllRecords();
     }
 
     /**
