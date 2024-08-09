@@ -3,20 +3,15 @@ package com.example.project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import com.example.project02.Database.PharmacyRepository;
 import com.example.project02.Database.entities.Drug;
-import com.example.project02.R;
 import com.example.project02.databinding.ActivityInventoryBinding;
 
 public class InventoryActivity extends AppCompatActivity {
@@ -31,11 +26,14 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityInventoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
         repository = PharmacyRepository.getRepository(getApplication());
+        //loginUser(savedInstanceState);
+        invalidateOptionsMenu();
 
-        EditText drugNameEditText = findViewById(R.id.drugNameEditText);
+
+
+
+/*        EditText drugNameEditText = findViewById(R.id.drugNameEditText);
         Button addDrugButton = findViewById(R.id.addDrugButton);
 
         addDrugButton.setOnClickListener(v -> {
@@ -57,7 +55,7 @@ public class InventoryActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             finish();
-        });
+        });*/
     }
     public static Intent inventoryIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, InventoryActivity.class);

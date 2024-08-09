@@ -47,10 +47,9 @@ public class AdminActionActivity extends AppCompatActivity {
         binding.InventoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToInventory();
+                startActivity(InventoryActivity.inventoryIntentFactory(getApplicationContext(), loggedInUserID));
             }
         });
-
 
         binding.deleteUsersButton.setOnClickListener(new View.OnClickListener() {
             @Override
