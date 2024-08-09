@@ -144,7 +144,7 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
     }
 
     private void getInformationFromDisplay() {
-        username = binding.prescrtionInformation.getText().toString();
+        username = binding.enterName.getText().toString();
         drugName = binding.drugName.getText().toString();
 
         String quantityString = binding.drugQuantity.getText().toString();
@@ -183,7 +183,7 @@ public class PrescriptionEntryActivity extends AppCompatActivity {
 
     private void insertNewPrescription(int quantity, int refills) {
         // Assuming you have a method to insert a new prescription
-        Prescription prescription = new Prescription(drugName, quantity, loggedInUserID, refills);
+        Prescription prescription = new Prescription(drugName, quantity, username, refills);
         repository.insertPrescription(prescription);
         toastMaker("Prescription added successfully.");
     }
